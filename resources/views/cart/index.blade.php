@@ -32,7 +32,7 @@
                                     </form>
                                 </td>
                                 <td> {{ $item->subtotal }} </td>
-                                <td><button class="btn btn-default btn-sm" href="{{ route('cart.remove', ['rowId' => $item->rowId]) }}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                <td><a class="btn btn-default btn-sm" href="{{ route('cart.remove', ['rowId' => $item->rowId]) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
                             </tr>
                         @endforeach
                     </tbody>
