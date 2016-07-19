@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace larashop\Http\Controllers\Auth;
 
-use App\User;
+use larashop\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use larashop\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 

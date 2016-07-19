@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace larashop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

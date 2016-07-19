@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace larashop\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
