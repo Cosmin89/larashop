@@ -4,6 +4,7 @@ namespace larashop\Http\Controllers;
 use Illuminate\Http\Request;
 
 use larashop\User;
+use larashop\Role;
 use larashop\Http\Requests;
 use Auth;
 use DB;
@@ -18,6 +19,8 @@ class UserController extends Controller
 
     public function postSignup(Request $request)
     {
+        $role_user = Role::where('name', 'User')->first();
+
         $this->validate($request, [
             'name'  =>  'required|min:4',
             'email' => 'email|required|unique:users',
@@ -31,6 +34,7 @@ class UserController extends Controller
         ]);
 
         $user->save();
+        $user->roles()->attach($role_user);
 
         Auth::login($user);
         return redirect()->back();

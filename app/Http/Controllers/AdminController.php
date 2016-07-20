@@ -4,6 +4,8 @@ namespace larashop\Http\Controllers;
 
 use larashop\Product;
 use larashop\Order;
+use larashop\User;
+use larashop\Role;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -14,7 +16,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $users = User::all();
+
+        return view('admin.index', ['users' => $users]);
     }
 
     public function products()
@@ -82,6 +86,22 @@ class AdminController extends Controller
         $order_product->delete();
 
         $product->delete();
+
+        return redirect()->back();
+    }
+
+    public function postAdminAssignRoles(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+
+        $user->roles()->detach();
+
+        if($request['role_user']) {
+            $user->roles()->attach(Role::where('name', 'User')->first());
+        }
+        if($request['role_admin']) {
+            $user->roles()->attach(Role::where('name', 'Admin')->first());
+        }
 
         return redirect()->back();
     }
