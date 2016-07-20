@@ -5,6 +5,7 @@
         <div class="panel-heading clearfix"><a href="{{ route('admin.create') }}" class="btn btn-success pull-right">Create Product</a></div>
             <div class="table-responsive">   
                 <table class="table table-hover">
+                @if(count($products) != 0 )
                      <thead>
                         <tr>
                             <th>Title</th>
@@ -33,6 +34,7 @@
                             </tr>
                         @endforeach
                      </tbody>
+                     @endif
                 </table>
             </div>
     </div>

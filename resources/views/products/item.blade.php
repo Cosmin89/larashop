@@ -10,7 +10,6 @@
             <img src="{{ $product->image }}" alt="{{ $product->title }}" class="thumbnail img-responsive">
         </div>
         <div class="col-md-8">
-
             @include('templates.partials.availability')
 
             <h3>{{ $product->title }}</h3>
