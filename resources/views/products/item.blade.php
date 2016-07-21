@@ -28,7 +28,7 @@
                    {{ $review->title }}
                 </div>
                 <div class="panel-body">
-                   {{ $review->content }}
+                   <p class="navbar-text">{{ $review->content }} </p>
                 </div>
                 <div class="panel-footer clearfix"><i class="pull-right">User: {{ $review->user->name }} | Date: {{ $review->created_at }}</i></div>
             </div>

@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function postCreate(Request $request)
     {
         $this->validate($request, [
-            'title' =>  'required|min:5',
+            'title' =>  'required|max:25',
             'slug'  =>  'required',
             'description'   =>  'required',
             'price' =>  'required',

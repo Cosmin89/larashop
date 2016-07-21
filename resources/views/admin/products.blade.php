@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel panel-default">
-        <div class="panel-heading clearfix"><a href="{{ route('admin.create') }}" class="btn btn-success pull-right">Create Product</a></div>
+        <div class="panel-heading clearfix"><a href="{{ route('admin.create') }}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Create Product</a></div>
             <div class="table-responsive">   
                 <table class="table table-hover">
                 @if(count($products) != 0 )

@@ -10,17 +10,35 @@
                         <h3>Shipping address</h3>
                          
                         <hr>
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" name="address" id="address" class="form-control" >
+                        <div class="form-group" id="address">
+                            {!! Form::label(null, 'Address:') !!}
+                            {!! Form::text(null, null, [
+                                'class' =>  'form-control',
+                                'required'  =>  'required',
+                                'data-parsley-trigger' => 'change focusout',
+                                'data-parsley-class-handler'    => '#address'
+
+                            ]) !!}
                         </div>
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" name="city" id="city" class="form-control" >
+                        <div class="form-group" id="city">
+                            {!! Form::label(null, 'City:') !!}
+                            {!! Form::text(null, null, [
+                                'class' =>  'form-control',
+                                'required'  =>  'required',
+                                'data-parsley-trigger' => 'change focusout',
+                                'data-parsley-class-handler'    => '#city'
+
+                            ]) !!}
                         </div>
-                        <div class="form-group">
-                            <label for="postal_code">Postal Code</label>
-                            <input type="text" name="postal_code" id="postal_code" class="form-control" >
+                        <div class="form-group" id="postal_code">
+                            {!! Form::label(null, 'Postal Code:') !!}
+                            {!! Form::text(null, null, [
+                                'class' =>  'form-control',
+                                'required'  =>  'required',
+                                'data-parsley-trigger'  => 'change focusout',
+                                'data-parsley-class-handler'    => '#postal_code'
+
+                            ]) !!}
                         </div>
                     </div>   
                 </div>
@@ -30,7 +48,7 @@
 
                 <div id="payment"></div>
 
-                 <div class="form-group" id="cc-group">
+                <div class="form-group" id="cc-group">
                 {!! Form::label(null, 'Credit card number:') !!}
                 {!! Form::text(null, null, [
                         'class'                         => 'form-control',

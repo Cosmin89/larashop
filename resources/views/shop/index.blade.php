@@ -10,12 +10,12 @@
         @foreach($productChunk as $product)
         <div class="col-md-6 col-md-4">
             <div class="thumbnail">
-                <a href="{{ route('product.get', ['slug' => $product->slug]) }}"><img src="{{ $product->image }}" alt="{{ $product->title }}" class="img-responsive"></a>
+                <img src="{{ $product->image }}" alt="{{ $product->title }}" class="img-responsive"></a>
                 <div class="caption">
                     @include('templates.partials.availability') 
-                    <h4>
+                    <h3>
                         <a href="{{ route('product.get', ['slug' => $product->slug]) }}">{{ $product->title }}</a>    
-                    </h4>
+                    </h3>
                     
                     <p>{{ $product->description }}</p>
                     <div class="clearfix">
@@ -29,3 +29,5 @@
     </div>
     @endforeach
 @endsection
+
+
