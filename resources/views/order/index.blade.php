@@ -12,7 +12,7 @@
                         <hr>
                         <div class="form-group" id="address">
                             {!! Form::label(null, 'Address:') !!}
-                            {!! Form::text(null, null, [
+                            {!! Form::text('address', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
                                 'data-parsley-trigger' => 'change focusout',
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group" id="city">
                             {!! Form::label(null, 'City:') !!}
-                            {!! Form::text(null, null, [
+                            {!! Form::text('city', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
                                 'data-parsley-trigger' => 'change focusout',
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group" id="postal_code">
                             {!! Form::label(null, 'Postal Code:') !!}
-                            {!! Form::text(null, null, [
+                            {!! Form::text('postal_code', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
                                 'data-parsley-trigger'  => 'change focusout',
@@ -111,7 +111,6 @@
                 </div>
             </div>
         </div>
-        {{ csrf_field() }}
     {!! Form::close() !!} 
 @endsection
 

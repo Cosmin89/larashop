@@ -40,17 +40,7 @@ class OrderController extends Controller
         if(!Cart::subtotal()) {
             return view('cart.index');
         }
-
-        $validator = \Validator::make($request->all(), [
-            'address'   =>  'required|min:4',
-            'city'      =>  'required',
-            'postal_code'   =>  'required'
-        ]);
-
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
-
+        
         $token = $request->input('stripeToken');
 
         $address = Address::firstOrCreate([
