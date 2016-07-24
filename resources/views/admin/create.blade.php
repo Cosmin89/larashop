@@ -36,7 +36,6 @@
                 'class' => 'form-control',
                 'required'  =>  'required',
                 'data-parsley-trigger' => 'change focusout',
-                'data-parsley-type'             => 'number',
                 'data-parsley-class-handler'    => '#price']) 
         !!}
     </div>

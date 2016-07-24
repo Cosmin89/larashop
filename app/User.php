@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'google_id', 'stripe_customer_id', 'avatar', 
+        'name', 'email', 'password', 'google_id', 'stripe_customer_id', 'avatar', 
     ];
 
     /**
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'remember_token',
+        'password', 'remember_token',
     ];
 
     public function orders()

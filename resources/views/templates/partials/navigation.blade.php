@@ -25,9 +25,9 @@
               <i class="glyphicon glyphicon-user" aria-hidden="true"></i> User Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
             @if(Auth::check())
-              <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}">User Profile</a></li>
+              <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->avatar }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
               <li role="separator" class="divider"></li>
-              <li><a href="{{ route('user.logout') }}"><img src="{{ Auth::user()->avatar }}" alt="" /> Logout</a></li>
+              <li><a href="{{ route('user.logout') }}">Logout</a></li>
             @else
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
               <li><a href="{{ route('user.signin') }}">Signin</a></li>
