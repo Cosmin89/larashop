@@ -27,10 +27,11 @@
             @if(Auth::check())
               <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}">User Profile</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="{{ route('user.logout') }}">Logout</a></li>
+              <li><a href="{{ route('user.logout') }}"><img src="{{ Auth::user()->avatar }}" alt="" /> Logout</a></li>
             @else
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
               <li><a href="{{ route('user.signin') }}">Signin</a></li>
+               <li><a href="{{ route('google.redirect') }}">Signin with Google</a></li>
             @endif
             
           </ul>

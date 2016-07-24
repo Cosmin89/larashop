@@ -42,6 +42,16 @@ Route::group(['prefix' => 'user'], function() {
             'uses' => 'UserController@postSignin',
             'as'   => 'user.signin' 
         ]);
+
+        Route::get('/google', [
+            'uses'  =>  'UserController@redirectToProvider',
+            'as'    =>  'google.redirect'
+        ]);
+        
+        Route::get('/callback', [
+            'uses'  =>  'UserController@handleToProviderCallback',
+            'as'    =>  'google.callback'
+        ]);
     });
 
     Route::group(['middleware' => 'auth'], function() {

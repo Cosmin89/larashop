@@ -9,7 +9,9 @@
         "laravel/framework": "5.2.*",
         "gloudemans/shoppingcart": "^2.1",
         "laravelcollective/html": "5.2.*",
-        "stripe/stripe-php": "3.*"
+        "stripe/stripe-php": "3.*",
+        "laravel/socialite": "^2.0",
+        "guzzlehttp/guzzle": "4.0"
         
     },
     "require-dev": {

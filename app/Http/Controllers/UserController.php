@@ -8,6 +8,7 @@ use larashop\Role;
 use larashop\Http\Requests;
 use Auth;
 use DB;
+use Socialite;
 use larashop\Order;
 
 class UserController extends Controller
@@ -74,8 +75,44 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function postReview()
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
     {
-        
+        return Socialite::driver('google')->scopes(['profile', 'email'])->redirect();
     }
+
+     /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleToProviderCallback()
+    {
+        $role_user = Role::where('name', 'User')->first();
+
+        $user = Socialite::driver('google')->user();
+        
+        if($authUser = User::where('google_id', $user->id)->first()) {      
+            Auth::login($authUser, true);
+
+            return redirect()->back();
+
+        } else {
+            $authUser = new User([
+                'name' =>  $user->name,
+                'email'    =>  $user->email,
+                'google_id'    =>  $user->id,
+                'avatar'   =>  $user->avatar
+            ]);
+
+            $authUser->save();
+            $authUser->roles()->attach($role_user);
+        }
+
+    }
+
 }

@@ -4,6 +4,7 @@
 
 <div class="row">
         <div class="col-md-12">
+                <img src="{{ Auth::user()->avatar }}" alt="" />
             <h3> My Orders </h3>
             <hr>
 
