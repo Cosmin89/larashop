@@ -35,12 +35,21 @@
            @endforeach 
 
           <hr>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             {!! Form::open(['method' => 'POST', 'route' => ['product.review', $product->id]]) !!}
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
                     {!! Form::label('title', 'Title: ', ['class' => 'control-label']) !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('content') ? ' has-error' : '' }}">
                     {!! Form::label('Content', 'Content: ', ['class' => 'control-label']) !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>

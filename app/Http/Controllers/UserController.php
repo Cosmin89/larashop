@@ -55,8 +55,14 @@ class UserController extends Controller
 
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
+            if(Auth::user()->name == "Admin") {
+                    return redirect()->action('AdminController@index');
+            }
+
             return redirect()->action('UserController@getProfile', ['name' => Auth::user()->name]);
         }
+
+
 
         return redirect()->back();
     }
@@ -99,8 +105,6 @@ class UserController extends Controller
         if($authUser = User::where('google_id', $user->id)->first()) {      
             Auth::login($authUser, true);
 
-            return redirect()->back();
-
         } else {
             $authUser = new User([
                 'name' =>  $user->name,
@@ -112,6 +116,8 @@ class UserController extends Controller
             $authUser->save();
             $authUser->roles()->attach($role_user);
         }
+
+        return redirect()->back();
 
     }
 

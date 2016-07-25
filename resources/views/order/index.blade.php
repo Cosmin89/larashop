@@ -2,11 +2,13 @@
 
 @section('content')
 
+
     {!! Form::open(['url' => route('order.post'), 'data-parsley-validate', 'id' => 'payment-form']) !!}
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6">
+                        
                         <h3>Shipping address</h3>
                          
                         <hr>

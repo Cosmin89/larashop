@@ -1,97 +1,45 @@
 @extends('templates.dashboard')
 
 @section('content')
-
-{!! Form::open(['route' => 'admin.create', 'data-parsley-validate', 'id' => 'product-form']) !!}
-   <div class="form-group" id="title">
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+{!! Form::open(['route' => 'admin.create']) !!}
+   <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
         {!! Form::label(null, 'Title: ') !!}
         {!! Form::text('title', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-class-handler'    => '#title'
-        ]) !!}
+                'class' => 'form-control']) !!}
     </div>
-    <div class="form-group" id="slug">
+    <div class="form-group {{ $errors->has('slug') ? ' has-error' : '' }}">
         {!! Form::label(null, 'Slug: ') !!}
         {!! Form::text('slug', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-class-handler'    => '#slug'
-        ]) !!}
+                'class' => 'form-control']) !!}
     </div>
-     <div class="form-group" id="description">
+     <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
         {!! Form::label(null, 'Description: ', ['class' => 'control-label']) !!}
-        {!! Form::textarea('description', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-class-handler'    => '#description'
-        ]) !!}
+        {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
     </div>
-     <div class="form-group" id="price">
+     <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
         {!! Form::label(null, 'Price: ', ['class' => 'control-label']) !!}
-        {!! Form::text('price', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-class-handler'    => '#price']) 
+        {!! Form::text('price', null, ['class' => 'form-control']) 
         !!}
     </div>
-     <div class="form-group" id="image">
+     <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
         {!! Form::label('image', 'Image: ', ['class' => 'control-label']) !!}
-        {!! Form::text('image', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-class-handler'    => '#image' 
-        ]) !!}
+        {!! Form::text('image', null, ['class' => 'form-control']) !!}
     </div>
-     <div class="form-group" id="stock">
+     <div class="form-group {{ $errors->has('stock') ? ' has-error' : '' }}">
         {!! Form::label('stock', 'Stock: ', ['class' => 'control-label']) !!}
-        {!! Form::text('stock', null, [
-                'class' => 'form-control',
-                'required'  =>  'required',
-                'data-parsley-trigger' => 'change focusout',
-                'data-parsley-type'             => 'number',
-                'data-parsley-class-handler'    => '#stock'
-        ]) !!}
+        {!! Form::text('stock', null, ['class' => 'form-control']) !!}
     </div>
 
-    {!! Form::submit('Create Product', ['class' => 'btn btn-primary', 'id' => 'submitBtn']) !!}
+    {!! Form::submit('Create Product', ['class' => 'btn btn-primary']) !!}
 
     {!! Form::close() !!}
-@endsection
-
-@section('scripts')
-
-<script>
-        window.ParsleyConfig = {
-            errorsWrapper: '<div></div>',
-            errorTemplate: '<div class="alert alert-danger parsley" role="alert"></div>',
-            errorClass: 'has-error',
-            successClass: 'has-success'
-        };
-    </script>
-
-    <script src="http://parsleyjs.org/dist/parsley.js"></script>
-
-     <script>
-
-        jQuery(function($) {
-            $('#product-form').submit(function(event) {
-                var $form = $(this);
-
-                $form.parsley().subscribe('parsley:form:validate', function(formInstance) {
-                    formInstance.submitEvent.preventDefault();
-                    return false;
-                });
-
-                $form.find('#submitBtn').prop('disabled', true);
-
-                return false;
-            });
-        });
-
 @endsection

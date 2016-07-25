@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function postCreate(Request $request)
     {
         $this->validate($request, [
-            'title' =>  'required|max:25',
+            'title' =>  'required|min:4',
             'slug'  =>  'required',
             'description'   =>  'required',
             'price' =>  'required',
@@ -63,7 +63,7 @@ class AdminController extends Controller
         $product = Product::find($id);
 
         $this->validate($request, [
-            'title' =>  'required|min:5',
+            'title' =>  'required|min:4',
             'slug'  =>  'required',
             'description'   =>  'required',
             'price' =>  'required',
