@@ -62,8 +62,6 @@ class UserController extends Controller
             return redirect()->action('UserController@getProfile', ['name' => Auth::user()->name]);
         }
 
-
-
         return redirect()->back();
     }
 
