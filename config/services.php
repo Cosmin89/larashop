@@ -36,9 +36,9 @@ return [
     ],
 
      'google' => [
-        'client_id' =>  '1074028877062-24ffmjro40g701rtk36pmpi9hd8h46t2.apps.googleusercontent.com',
-        'client_secret' =>  '_DIFVCpCerYdHsOXbkrwdHks',
-        'redirect'  =>  'http://localhost/larashop/public/user/callback'
+        'client_id' =>  '',
+        'client_secret' =>  '',
+        'redirect'  =>  ''
     ]
 
 ];
