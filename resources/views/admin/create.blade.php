@@ -10,7 +10,7 @@
         </ul>
     </div>
 @endif
-{!! Form::open(['route' => 'admin.create']) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['admin.create']]) !!}
    <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
         {!! Form::label(null, 'Title: ') !!}
         {!! Form::text('title', null, ['class' => 'form-control', 'value' => "{{ Input::old('title') }}"]) !!}
@@ -38,6 +38,5 @@
     </div>
 
     {!! Form::submit('Create Product', ['class' => 'btn btn-primary']) !!}
-
     {!! Form::close() !!}
 @endsection

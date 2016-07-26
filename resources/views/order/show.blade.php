@@ -28,7 +28,6 @@
             <hr>
 
             <p>
-                Shipping: {{ Cart::tax() }} <br>
                 <strong>Order total: ${{ $order->amount / 100 }}</strong>
             </p>
 
