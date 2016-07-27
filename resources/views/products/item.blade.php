@@ -22,19 +22,8 @@
 
         <div class="col-md-6">
         <hr>
-            @foreach($product->reviews as $review)
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                   {{ $review->title }}
-                </div>
-                <div class="panel-body">
-                   <p class="navbar-text">{{ $review->content }} </p>
-                </div>
-                <div class="panel-footer clearfix"><i class="pull-right">User: {{ $review->user->name }} | Date: {{ $review->created_at }}</i></div>
-            </div>
-           @endforeach 
-
-          <hr>
+        
+            <h4>Write a review</h4>
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -56,7 +45,21 @@
 
                 {!! Form::submit('Post Review', ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!}
+ 
+            <hr>
+                @foreach($product->reviews as $review)
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                    {{ $review->title }}
+                    </div>
+                    <div class="panel-body">
+                    <p class="navbar-text">{{ $review->content }} </p>
+                    </div>
+                    <div class="panel-footer clearfix"><i class="pull-right">User: {{ $review->user->name }} | Date: {{ $review->created_at }}</i></div>
+                </div>
+            @endforeach 
         </div>
+        
     </div>
 @endsection
 
