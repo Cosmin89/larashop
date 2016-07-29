@@ -9,6 +9,7 @@
                     <thead>
                         <tr>
                             <th>Product</th>
+                            <th>Image</th>
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>SubTotal</th>
@@ -18,6 +19,7 @@
                         @foreach($cart as $item)
                             <tr>
                                 <td><a href="{{ route('product.get', ['slug' => $item->options->slug]) }}">{{ $item->name }}</a></td>
+                                <td><img src="{{ $item->model->image }}" alt="" class="img-responsive img-square" width="30px" height="30px"></td>
                                 <td>$ {{ $item->price }}</td>
                                 <td>
                                     <form action="{{ route('cart.update', ['rowId' => $item->rowId]) }}" method="post" class="form-inline">

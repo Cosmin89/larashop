@@ -23,7 +23,7 @@
         <div class="col-md-6">
         <hr>
         
-            <h4>Write a review</h4>
+            <h4>Write a review </h4>
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -47,7 +47,9 @@
             {!! Form::close() !!}
  
             <hr>
-                @foreach($product->reviews as $review)
+
+            <div class="col-md-12">
+            @foreach($product->reviews as $review)
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     {{ $review->title }}
@@ -57,7 +59,22 @@
                     </div>
                     <div class="panel-footer clearfix"><i class="pull-right">User: {{ $review->user->name }} | Date: {{ $review->created_at }}</i></div>
                 </div>
+                
+                    @foreach($review->likes as $user)
+                    <p>{{ $user->name }} likes this!</p>
+                    @endforeach
+
+                    @if($review->isLiked)
+                        <a href="{{ route('review.like', $review->id) }}"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a>
+                    @else 
+                        <a href="{{ route('review.like', $review->id) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                    @endif
+
+                    <span class="badge">{{ $review->likes()->count() }}</span>
+
+                    <hr>
             @endforeach 
+        </div>
         </div>
         
     </div>

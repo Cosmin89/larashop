@@ -85,6 +85,11 @@ Route::group(['prefix' => 'user'], function() {
                 'uses'  =>  'ProductController@postReview',
                 'as'    =>  'product.review'
             ]);
+
+            Route::get('review/like/{id}', [
+                'uses'  =>  'LikeController@likeReview',
+                'as'    =>  'review.like'
+            ]);
         });
     });
 });

@@ -3,6 +3,7 @@
 namespace larashop;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Review extends Model
 {
@@ -16,5 +17,16 @@ class Review extends Model
     public function user()
     {
         return $this->belongsTo('larashop\User', 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->morphToMany('larashop\User', 'likeable')->whereDeletedAt(null);
+    }
+
+    public function getIsLikedAttribute()
+    {
+        $like = $this->likes()->whereUserId(Auth::id())->first();
+        return (!is_null($like)) ? true : false;
     }
 }

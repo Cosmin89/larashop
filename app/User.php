@@ -65,4 +65,9 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function likedReviews()
+    {
+        return $this->morphedByMany('larashop\Review', 'likeable')->whereDeletedAt(null);
+    }
 }
