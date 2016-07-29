@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-    <div class="row">
         <div class="col-md-4">
             <img src="{{ $product->image }}" alt="{{ $product->title }}" class="thumbnail img-responsive">
         </div>
@@ -76,7 +75,5 @@
             @endforeach 
         </div>
         </div>
-        
-    </div>
 @endsection
 

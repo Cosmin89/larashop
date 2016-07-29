@@ -1,7 +1,6 @@
 @extends('templates.app')
 
 @section('content')
-    <div class="row">
         <div class="col-md-8">
             @if(Cart::count())
                 <div class="well">
@@ -41,7 +40,7 @@
                     </table>
                     <div class="clearfix">
                     <hr>
-                    <h4 class="pull-left">Total {{ Cart::total() }}</h4>
+                    <h4 class="pull-left">Total $ {{ Cart::total() }}</h4>
                     <a href="{{ route('cart.empty') }}" class="btn btn-danger pull-right" role="button"><span class="glyphicon glyphicon-trash"></span> Empty Cart</a>
                     </div>
                 </div>
@@ -60,5 +59,4 @@
                 </div>
             @endif
         </div>
-    </div>
 @endsection

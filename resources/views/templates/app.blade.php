@@ -14,7 +14,11 @@
     @include('templates.partials.navigation')
 
     <div class="container">
-       @yield('content')
+        <div class="row">
+            <div class="col-md-12">
+                @yield('content')
+            </div>
+        </div>      
     </div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" 

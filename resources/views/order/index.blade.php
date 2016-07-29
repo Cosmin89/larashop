@@ -1,10 +1,7 @@
 @extends('templates.app')
 
 @section('content')
-
-
     {!! Form::open(['route' => ['order.post'], 'data-parsley-validate', 'id' => 'payment-form']) !!}
-        <div class="row">
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6">
@@ -112,7 +109,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     {!! Form::close() !!} 
 @endsection
 

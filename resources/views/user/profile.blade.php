@@ -1,10 +1,7 @@
 @extends('templates.app')
 
 @section('content')
-
-<div class="row">
-        <div class="col-md-12">
-                <img src="{{ Auth::user()->avatar }}" alt="" class="img-circle"/>
+            <img src="{{ Auth::user()->avatar }}" alt="" class="img-circle"/>
             <h3> My Orders </h3>
             <hr>
 
@@ -29,7 +26,4 @@
             @foreach($user->likedReviews as $review)
                 <h5><a href="{{ route('product.get', ['slug' => $review->product->slug]) }}">{{ $review-> title }}</a></h5>
             @endforeach
-  
-        </div>
-</div>
 @endsection

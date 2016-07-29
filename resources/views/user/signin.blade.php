@@ -1,7 +1,6 @@
 @extends('templates.app')
 
 @section('content')
-<div class="row">
     <div class="col-md-4 col-md-offset-4">
         <h1>Sign In</h1>
         @if(count($errors) > 0)
@@ -24,5 +23,4 @@
             {{ csrf_field() }}
         </form>
     </div>
-</div>
 @endsection
