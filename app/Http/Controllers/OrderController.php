@@ -14,7 +14,6 @@ use larashop\Address;
 use Stripe\Stripe;
 use Stripe\Charge;
 use Stripe\Customer;
-use larashop\Orders_products;
 
 class OrderController extends Controller
 {

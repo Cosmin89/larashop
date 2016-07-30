@@ -42,12 +42,10 @@
                     </div>   
                 </div>
 
-                <h3>Payment</h3>
-                <hr>
+            <h3>Payment</h3>
+            <hr>
 
-                <div id="payment"></div>
-
-                <div class="form-group" id="cc-group">
+            <div class="form-group" id="cc-group">
                 {!! Form::label(null, 'Credit card number:') !!}
                 {!! Form::text(null, null, [
                         'class'                         => 'form-control',

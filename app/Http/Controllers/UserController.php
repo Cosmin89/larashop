@@ -7,7 +7,6 @@ use larashop\User;
 use larashop\Role;
 use larashop\Http\Requests;
 use Auth;
-use DB;
 use Socialite;
 use larashop\Order;
 
