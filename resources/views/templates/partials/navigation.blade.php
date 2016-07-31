@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="{{ route('cart.index') }}">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
                 <span class="badge">{{ Cart::count() }}</span>
             </a>
         </li>
@@ -27,11 +27,11 @@
             @if(Auth::check())
               <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->avatar }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
               <li role="separator" class="divider"></li>
-              <li><a href="{{ route('user.logout') }}">Logout</a></li>
+              <li><a href="{{ route('user.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
             @else
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
-              <li><a href="{{ route('user.signin') }}">Signin</a></li>
-               <li><a href="{{ route('google.redirect') }}">Signin with Google</a></li>
+              <li><a href="{{ route('user.signin') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Signin</a></li>
+               <li><a href="{{ route('google.redirect') }}"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a></li>
             @endif
             
           </ul>

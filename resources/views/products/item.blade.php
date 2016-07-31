@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <img src="{{ $product->image }}" alt="{{ $product->title }}" class="thumbnail img-responsive">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" style="margin-bottom: 10px">
             @include('templates.partials.availability')
 
             <h3>{{ $product->title }}</h3>
@@ -21,7 +21,6 @@
 
         <div class="col-md-6">
         <hr>
-        
             <h4>Write a review </h4>
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -44,36 +43,29 @@
 
                 {!! Form::submit('Post Review', ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!}
- 
-            <hr>
 
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-top:10px">
+            <hr>
             @foreach($product->reviews as $review)
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                    {{ $review->title }}
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">{{ $review->title }}</h4>
                     </div>
                     <div class="panel-body">
-                    <p class="navbar-text">{{ $review->content }} </p>
+                        {{ $review->content }}
                     </div>
-                    <div class="panel-footer clearfix"><i class="pull-right">User: {{ $review->user->name }} | Date: {{ $review->created_at }}</i></div>
-                </div>
-                
-                    @foreach($review->likes as $user)
-                    <p>{{ $user->name }} likes this!</p>
-                    @endforeach
-
-                    @if($review->isLiked)
-                        <a href="{{ route('review.like', $review->id) }}"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a>
-                    @else 
-                        <a href="{{ route('review.like', $review->id) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-                    @endif
-
-                    <span class="badge">{{ $review->likes()->count() }}</span>
-
-                    <hr>
-            @endforeach 
-        </div>
+                    <div class="panel-footer">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                        @if($review->isLiked)
+                            <a href="{{ route('review.like', $review->id) }}"> Unlike</a>
+                        @else 
+                            <a href="{{ route('review.like', $review->id) }}"> Like</a>
+                        @endif
+                        <span class="badge">{{ $review->likes()->count() }}</span>
+                  </div>
+                </div>         
+            @endforeach
+            </div> 
         </div>
 @endsection
 

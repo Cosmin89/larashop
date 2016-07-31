@@ -20,7 +20,10 @@
                 <input type="password" id="password" name="password" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Sign In</button>
+            <a href="{{ route('google.redirect') }}" class="btn btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a>
             {{ csrf_field() }}
         </form>
+
+        
     </div>
 @endsection
