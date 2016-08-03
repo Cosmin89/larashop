@@ -46,9 +46,14 @@ class AdminController extends Controller
 
         $input = $request->all();
 
+        if(Product::where('title', $request->input('title'))->first())
+        {
+            return redirect()->route('admin.create')->with('error', 'Product title already exists');
+        }
+
         Product::create($input);
 
-        return redirect()->route('admin.products');
+        return response()->json(['new_product' => $input], 200);
     }
 
     public function editProduct($id)
@@ -75,7 +80,7 @@ class AdminController extends Controller
 
         $product->update($input);
 
-        return redirect()->back();
+        return response()->json($edit);
     }
 
     public function deleteProduct($id) {

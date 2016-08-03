@@ -77,7 +77,6 @@ class OrderController extends Controller
             $user = User::where('email', $email)->first();
         }
         try {
-
             foreach($cart as $item) {
                     $charge = Charge::create([
                     'amount'    =>  Cart::total() * 100,
@@ -90,19 +89,21 @@ class OrderController extends Controller
                 ]);
             }
             
+             $order = new Order();
+
+             $order->amount = Cart::total();
+             $order->address_id = $address->id;
+             $order->stripe_transaction_id = $charge->id;
+           
+             Auth::user()->orders()->save($order);
+        
         } catch (\Stripe\Error\Card $e) {
             return redirect()->route('order')
                 ->withErrors($e->getMessage())
                 ->withInput();
         }
 
-        $order = Order::create([
-            'user_id'   =>  Auth::user()->id,
-            'address_id'    =>  $address->id,
-            'amount'    =>  Cart::total() * 100,
-            'stripe_transaction_id' =>  $charge->id,
-        ]);
-
+       
         foreach($cart as $item) {
             $order->products()->attach($item->id, ['quantity' => $item->qty]);
 

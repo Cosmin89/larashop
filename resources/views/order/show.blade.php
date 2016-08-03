@@ -26,6 +26,6 @@
         <hr>
 
         <p>
-            <strong>Order total: ${{ $order->amount / 100 }}</strong>
+            <strong>Order total: ${{ $order->amount }}</strong>
         </p>
 @endsection
