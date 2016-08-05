@@ -46,26 +46,35 @@
 
             <div class="col-md-12" style="margin-top:10px">
             <hr>
-            @foreach($product->reviews as $review)
-                <div class="panel panel-default">
-                    <div class="panel-heading clearfix">
-                        <h4 class="panel-title">{{ $review->title }}</h4>
-                    </div>
-                    <div class="panel-body">
-                        {{ $review->content }}
-                    </div>
-                    <div class="panel-footer">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        @if($review->isLiked)
-                            <a href="{{ route('review.like', $review->id) }}"> Unlike</a>
-                        @else 
-                            <a href="{{ route('review.like', $review->id) }}"> Like</a>
-                        @endif
-                        <span class="badge">{{ $review->likes()->count() }}</span>
-                  </div>
-                </div>         
-            @endforeach
-            </div> 
-        </div>
+
+                @foreach($product->reviews as $review)
+                <ul class="media-list">
+                    <li class="media">
+                        <div class="media-left">
+                            <img class="media-object img-circle" src="{{ $review->user->avatar }}" alt="...">
+                        </div>
+                       
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ $review->title }}</h4>
+                            by {{ $review->user->name }} on {{ $review->created_at->format('Y-m-d') }}
+                             
+                            <div class="panel-body">
+                               {{ $review->content }}
+                            </div>
+
+                            
+                            
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            @if($review->isLiked)
+                                <a href="{{ route('review.like', $review->id) }}"> Unlike</a>
+                            @else 
+                                <a href="{{ route('review.like', $review->id) }}"> Like</a>
+                            @endif
+                            <span class="badge">{{ $review->likes()->count() }}</span>
+                        </div>
+                    </li>
+                </ul>
+                @endforeach
+            </div>
 @endsection
 

@@ -3,8 +3,6 @@
 @section('content')
         <h3>Order # {{ $order->id }}</h3>
 
-        <hr>
-
         <div class="row">
             <div class="col-md-6">
                 <h4>Shipping to</h4>

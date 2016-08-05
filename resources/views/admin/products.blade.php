@@ -22,7 +22,7 @@
                      </thead>
                      <tbody>
                         @foreach($products as $product)
-                            <tr>
+                            <tr data-id="$product->id">
                                 <td>
                                    {{ $product->title }}
                                 </td>
@@ -33,7 +33,7 @@
                                 <td>{{ $product->stock }}</td>
                                 {!! Form::open(['method' =>  'DELETE', 'route'  =>  ['admin.delete', $product->id]]) !!}
                                 <td> 
-                                    <a href="{{ route('admin.edit', ['id' => $product->id]) }}" class="btn btn-primary" ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                                    <a href="{{ route('admin.edit', ['id' => $product->id]) }}" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
                                     <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                                 </td>
                                 {!! Form::close() !!} 
@@ -50,18 +50,28 @@
     <script>
         var token = '{{ Session::token() }}';
 
-        $('#modal-create').on('click', function () { 
+        $('#modal-create').on('click', function (e) {
+            e.preventDefault(); 
+            var form_action = $("#create-modal").find("form").attr("action");
+            var title = $("#create-modal").find("input[name='title']").val();
+            var slug = $("#create-modal").find("input[name='slug']").val();
+            var description = $("#create-modal").find("input[name='description']").val();
+            var price = $("#create-modal").find("input[name='price']").val();
+            var image = $("#create-modal").find("input[name='image']").val();
+            var stock = $("#create-modal").find("input[name='stock']").val();
+            
             $.ajax({ 
+                dataType: 'json',
                 method: 'POST', 
-                url: '{{ route('admin.create') }}', 
+                url: form_action, 
                 data: {
-                title: $('#title').val(),
-                slug: $('#slug').val(),
-                description: $('#description').val(),
-                price: $('#price').val(),
-                image: $('#image').val(),
-                stock:$('#stock').val(),
-                _token: token
+                    title: title,
+                    slug: slug,
+                    description: description,
+                    price: price,
+                    image: image,
+                    stock: stock,
+                    _token: token
                 }          
             }).done(function(msg) {
                 $('#create-modal').modal('hide');

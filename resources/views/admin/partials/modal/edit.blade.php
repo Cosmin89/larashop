@@ -1,45 +1,49 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="edit-product">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Edit Product</h4>
       </div>
-      {!! Form::model($product, [
-       'method' =>  'PUT',
-       'route'  =>  ['admin.update', $product->id]]) !!}
-      <div class="modal-body">
-      <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
-            {!! Form::label(null, 'Title: ') !!}
-            {!! Form::text('title', null, ['class' => 'form-control', 'value' => "{{ Input::old('title') }}"]) !!}
-        </div>
-        <div class="form-group {{ $errors->has('slug') ? ' has-error' : '' }}">
-            {!! Form::label(null, 'Slug: ') !!}
-            {!! Form::text('slug', null, ['class' => 'form-control', 'value' => "{{ Input::old('slug') }}"]) !!}
-        </div>
-        <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
-            {!! Form::label(null, 'Description: ', ['class' => 'control-label']) !!}
-            {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3, 'value' => "{{ Input::old('description') }}"]) !!}
-        </div>
-        <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">
-            {!! Form::label(null, 'Price: ', ['class' => 'control-label']) !!}
-            {!! Form::text('price', null, ['class' => 'form-control', 'value' => "{{ Input::old('price') }}"]) 
-            !!}
-        </div>
-        <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
-            {!! Form::label('image', 'Image: ', ['class' => 'control-label']) !!}
-            {!! Form::text('image', null, ['class' => 'form-control', 'value' => "{{ Input::old('image') }}"]) !!}
-        </div>
-        <div class="form-group {{ $errors->has('stock') ? ' has-error' : '' }}">
-            {!! Form::label('stock', 'Stock: ', ['class' => 'control-label']) !!}
-            {!! Form::text('stock', null, ['class' => 'form-control', 'value' => "{{ Input::old('stock') }}"]) !!}
-        </div>
-          </div>
+    <form id="frmProducts" name="frmProducts">
+       <div class="modal-body">
+            <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" data-error="Please enter title" required/>
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input type="text" id="slug" name="slug" class="form-control" data-error="please enter slug" required/>
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="textarea" id="description" name="description" class="form-control" data-error="please enter description" required/>
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" id="price" name="price" class="form-control" data-error="please enter price" required>
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                    <label for="image">Image</label>
+                    <input type="text" id="image" name="image" class="form-control" data-error="please enter image" required>
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="text" id="stock" name="stock" class="form-control" data-error="please enter stock" required>
+                    <div class="help-block with-errors"></div>
+            </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="modal-save">Save changes</button>
+        <input type="hidden" id="product_id" name="product_id" value="0">
       </div>
-       {!! Form::close() !!}
+     {!! Form::close() !!}
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

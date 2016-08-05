@@ -80,7 +80,7 @@ class AdminController extends Controller
 
         $product->update($input);
 
-        return response()->json($edit);
+        return redirect()->back();
     }
 
     public function deleteProduct($id) {
