@@ -27,9 +27,18 @@ class OrderController extends Controller
         return view('order.index');
     }
 
-    public function show($stripe_transaction_id)
+    public function display()
     {
-        $order = Order::with(['address', 'products'])->where('stripe_transaction_id', $stripe_transaction_id)->first();
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $orders = $user->orders;
+
+        return view('user.orders.display', ['orders' => $orders]);
+    }
+
+    public function show($payment_id)
+    {
+         $order = Order::with(['address', 'products'])->where('payment_id', $payment_id)->first();
 
         return view('order.show', ['order' => $order]);
     }
@@ -79,21 +88,21 @@ class OrderController extends Controller
         try {
             foreach($cart as $item) {
                     $charge = Charge::create([
-                    'amount'    =>  Cart::total() * 100,
-                    'currency'  =>  'usd',
-                    'customer'  =>  $customerID,
-                    'metadata'  =>  [
-                        'product_name'  => $item->name,
-                        'product_price' =>  $item->price
-                    ]
-                ]);
+                        'amount'    =>  Cart::total() * 100,
+                        'currency'  =>  'usd',
+                        'customer'  =>  $customerID,
+                        'metadata'  =>  [
+                            'product_name'  => $item->name,
+                            'product_price' =>  $item->price
+                        ]
+                    ]);
             }
             
              $order = new Order();
 
              $order->amount = Cart::total();
              $order->address_id = $address->id;
-             $order->stripe_transaction_id = $charge->id;
+             $order->payment_id = $charge->id;
            
              Auth::user()->orders()->save($order);
         

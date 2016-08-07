@@ -1,14 +1,8 @@
 @extends('templates.app')
 
 @section('content')
-            <img src="{{ Auth::user()->avatar }}" alt="" class="img-circle"/>
-            <h3> My Orders </h3>
 
-            @foreach($user->orders as $order)
-                    <p><a href="{{ route('order.show', ['stripe_transaction_id' => $order->stripe_transaction_id]) }}">{{ $order->stripe_transaction_id }}</a></p>
-            @endforeach
-
-            <hr>
+@include('user.partials.nav')
 
             <h3> My Reviews <h3>
 
@@ -26,4 +20,5 @@
             @foreach($user->likedReviews as $review)
                 <h5><a href="{{ route('product.get', ['slug' => $review->product->slug]) }}">{{ $review->title }}</a></h5>
             @endforeach
+
 @endsection

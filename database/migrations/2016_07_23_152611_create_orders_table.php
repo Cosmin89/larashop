@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('stripe_transaction_id');
+            $table->string('payment_id');
             $table->timestamps();
         });
     }

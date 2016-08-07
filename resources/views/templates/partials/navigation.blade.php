@@ -1,18 +1,11 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{{ route('shop.index') }}">Home</a>
-    </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="{{ (URL::current() == route('shop.index')) ? 'active' : '' }}"><a href="{{ route('shop.index') }}">Home </a></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="{{ route('cart.index') }}">
@@ -25,13 +18,17 @@
               <i class="glyphicon glyphicon-user" aria-hidden="true"></i> User Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
             @if(Auth::check())
-              <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->avatar }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
+              @if(Auth::user()->hasRole('Admin'))
+                <li><a href="{{ route('admin.index') }}">Dashboard</a></li>
+              @else
+                <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->avatar }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
+              @endif
               <li role="separator" class="divider"></li>
               <li><a href="{{ route('user.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
             @else
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
               <li><a href="{{ route('user.signin') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Signin</a></li>
-               <li><a href="{{ route('google.redirect') }}"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a></li>
+              <li><a href="{{ route('google.redirect') }}"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a></li>
             @endif
             
           </ul>

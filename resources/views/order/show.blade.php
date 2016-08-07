@@ -1,8 +1,10 @@
 @extends('templates.app')
 
 @section('content')
-        <h3>Order # {{ $order->id }}</h3>
 
+        <h3>Order # {{ $order->payment_id }}</h3>
+
+        <hr>
         <div class="row">
             <div class="col-md-6">
                 <h4>Shipping to</h4>

@@ -63,7 +63,6 @@
                             </div>
 
                             
-                            
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                             @if($review->isLiked)
                                 <a href="{{ route('review.like', $review->id) }}"> Unlike</a>

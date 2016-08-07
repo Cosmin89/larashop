@@ -76,9 +76,14 @@ Route::group(['prefix' => 'user'], function() {
                 'as'    =>  'order.post'
             ]);
 
-            Route::get('order/{stripe_transaction_id}', [
+            Route::get('order/{payment_id}', [
                 'uses'  =>  'OrderController@show',
                 'as'    =>  'order.show'
+            ]);
+
+            Route::get('/orders', [
+                'uses'  =>  'OrderController@display',
+                'as'    =>  'orders.display'
             ]);
 
             Route::post('review/{id}', [
