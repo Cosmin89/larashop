@@ -61,9 +61,8 @@
                             <div class="panel-body">
                                {{ $review->content }}
                             </div>
-
+                                <i data-toggle="tooltip" data-placement="top" data-title=" Liked by: @foreach($review->likes as $user) {{ $user->name }} @endforeach" class="fa fa-thumbs-up" aria-hidden="true"></i>
                             
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                             @if($review->isLiked)
                                 <a href="{{ route('review.like', $review->id) }}"> Unlike</a>
                             @else 
@@ -75,5 +74,14 @@
                 </ul>
                 @endforeach
             </div>
+@endsection
+@section('scripts')
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
+
 @endsection
 

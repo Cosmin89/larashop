@@ -81,11 +81,6 @@ Route::group(['prefix' => 'user'], function() {
                 'as'    =>  'order.show'
             ]);
 
-            Route::get('/orders', [
-                'uses'  =>  'OrderController@display',
-                'as'    =>  'orders.display'
-            ]);
-
             Route::post('review/{id}', [
                 'uses'  =>  'ProductController@postReview',
                 'as'    =>  'product.review'
@@ -112,27 +107,27 @@ Route::group(['prefix' => 'admin'], function() {
                 'as'    =>  'admin.products'
             ]);
 
-            Route::get('/product/create', [
+            Route::get('/product', [
                     'uses'  =>  'AdminController@getCreate',
                     'as'    =>  'admin.create'
             ]);
 
-            Route::post('/product/create', [
+            Route::post('/product', [
                 'uses'  =>  'AdminController@postCreate',
                 'as'    =>  'admin.create'
             ]);
 
-            Route::get('/product/{id}/edit', [
+            Route::get('/product/{product_id}', [
                 'uses'  =>  'AdminController@editProduct',
                 'as'    =>  'admin.edit'
             ]);
 
-            Route::put('/product/{id}', [
+            Route::put('/product/{product_id}', [
                 'uses'  =>  'AdminController@updateProduct',
                 'as'    =>  'admin.update'
             ]);
 
-            Route::delete('/product/{id}', [
+            Route::delete('/product/{product_id}', [
                 'uses'  =>  'AdminController@deleteProduct',
                 'as'    =>  'admin.delete'
             ]);

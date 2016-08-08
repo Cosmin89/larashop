@@ -10,7 +10,7 @@
         <li>
             <a href="{{ route('cart.index') }}">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
-                <span class="badge">{{ Cart::count() }}</span>
+                <span class="badge" data-placement="bottom" data-toggle="tooltip" title="@foreach(Cart::content() as $item) {{ $item->name }} @endforeach">{{ Cart::count() }}</span>
             </a>
         </li>
         <li class="dropdown">
@@ -37,3 +37,12 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+@section('scripts')
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
+
+@endsection

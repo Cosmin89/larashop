@@ -27,15 +27,6 @@ class OrderController extends Controller
         return view('order.index');
     }
 
-    public function display()
-    {
-        $user = User::where('id', Auth::user()->id)->first();
-
-        $orders = $user->orders;
-
-        return view('user.orders.display', ['orders' => $orders]);
-    }
-
     public function show($payment_id)
     {
          $order = Order::with(['address', 'products'])->where('payment_id', $payment_id)->first();

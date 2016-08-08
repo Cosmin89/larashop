@@ -51,21 +51,21 @@ class AdminController extends Controller
             return redirect()->route('admin.create')->with('error', 'Product title already exists');
         }
 
-        Product::create($input);
+        $product = Product::create($input);
 
-        return response()->json(['new_product' => $input], 200);
+        return response()->json($product);
     }
 
-    public function editProduct($id)
+    public function editProduct($product_id)
     {
-        $product = Product::find($id);
+        $product = Product::find($product_id);
 
-        return view('admin.edit', ['product' => $product]);
+        return response()->json($product);
     }
 
-    public function updateProduct($id, Request $request)
+    public function updateProduct($product_id, Request $request)
     {
-        $product = Product::find($id);
+        $product = Product::find($product_id);
 
         $this->validate($request, [
             'title' =>  'required|min:4',
@@ -76,23 +76,21 @@ class AdminController extends Controller
             'stock' =>  'required'
         ]);
 
-        $input = $request->all();
+        $product->update($request->all());
 
-        $product->update($input);
-
-        return redirect()->back();
+        return response()->json($product);
     }
 
-    public function deleteProduct($id) {
-        $product = Product::find($id);
+    public function deleteProduct($product_id) {
+        $product = Product::find($product_id);
 
-        $order_product = DB::table('order_product')->where('product_id', $id);
+        $order_product = DB::table('order_product')->where('product_id', $product_id);
 
         $order_product->delete();
 
         $product->delete();
 
-        return redirect()->back();
+        return response()->json($product);
     }
 
     public function postAdminAssignRoles(Request $request)
