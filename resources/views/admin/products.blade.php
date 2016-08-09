@@ -1,45 +1,43 @@
 @extends('templates.dashboard')
 @section('content')
-     @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     <div class="panel panel-default">
         <div class="panel-heading clearfix"><button id="btn_add" name="btn_add" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Create Product</button></div>  
-                <table class="table table-hover">
-                @if(count($products) != 0 )
-                     <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Slug</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Image</th>
-                            <th>Stock</th>
-                            <th></th>
-                        </tr>
-                     </thead>
-                     <tbody id="products-list" name="products-list">
-                        @foreach($products as $product)
-                            <tr id="product{{$product->id}}">
-                                <td>
-                                   {{ $product->title }}
-                                </td>
-                                <td><a href="{{ route('product.get', ['slug' => $product->slug]) }}">{{ $product->slug }}</a></td>
-                                <td>{{ $product->description }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td><img src="{{ $product->image }}" alt="" class="img-responsive img-square" width="30px" height="30px"></td>
-                                <td>{{ $product->stock }}</td>
-                                <td> 
-                                   <button class="btn btn-primary btn-detail open_modal" value="{{$product->id}}">Edit</button>
-                                   <button class="btn btn-danger btn-delete delete-product" value="{{$product->id}}">Delete</button>
-                                </td>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                    @if(count($products) != 0 )
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>Stock</th>
+                                <th></th>
                             </tr>
-                        @endforeach
-                     </tbody>
-                     @endif
+                        </thead>
+                        <tbody id="products-list" name="products-list">
+                            @foreach($products as $product)
+                                <tr id="product{{$product->id}}">
+                                    <td>
+                                    {{ $product->title }}
+                                    </td>
+                                    <td><a href="{{ route('product.get', ['slug' => $product->slug]) }}">{{ $product->slug }}</a></td>
+                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td><img src="{{ $product->image }}" alt="" class="img-responsive img-square" width="30px" height="30px"></td>
+                                    <td>{{ $product->stock }}</td>
+                                    <td> 
+                                    <button class="btn btn-primary btn-detail open_modal" value="{{$product->id}}">Edit</button>
+                                    <button class="btn btn-danger btn-delete delete-product" value="{{$product->id}}">Delete</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        @endif
                 </table>
+            </div>
+
     </div>
     @include('admin.partials.modal.mymodal')
 @endsection

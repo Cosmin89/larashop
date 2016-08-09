@@ -48,6 +48,7 @@
             <hr>
 
                 @foreach($product->reviews as $review)
+                
                 <ul class="media-list">
                     <li class="media">
                         <div class="media-left">

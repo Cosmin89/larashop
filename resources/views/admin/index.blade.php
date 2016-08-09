@@ -1,10 +1,9 @@
 @extends('templates.dashboard')
 
 @section('content')
-
      <div class="panel panel-default">
-        <div class="panel-heading clearfix">Users panel</div>
-            <div class="table-responsive">   
+        <div class="panel-heading clearfix"><strong>Users panel</strong></div>
+            <div class="panel-body">
                 <table class="table table-hover">
                      <thead>
                         <tr>

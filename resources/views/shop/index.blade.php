@@ -5,11 +5,12 @@
 @endsection
 
 @section('content')
+
     @foreach($products->chunk(3) as $productChunk)
         @foreach($productChunk as $product)
-        <div class="col-md-6 col-md-4">
+        <div class="col-md-3">
             <div class="thumbnail">
-                <img src="{{ $product->image }}" alt="{{ $product->title }}" class="img-responsive" height="150" width="200"></a>
+                <img src="{{ $product->image }}" alt="{{ $product->title }}" class="img-responsive" height="150" width="150"></a>
                 <div class="caption">
                     @include('templates.partials.availability') 
                     <h4>
@@ -26,8 +27,8 @@
         </div>
         @endforeach
     @endforeach
-    
 @endsection
+
 
 
 
