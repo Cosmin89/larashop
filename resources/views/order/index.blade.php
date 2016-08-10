@@ -9,33 +9,36 @@
                         <h3>Shipping address</h3>
                          
                         <hr>
-                        <div class="form-group" id="address">
+                        <div class="form-group" id="address_line1">
                             {!! Form::label(null, 'Address:') !!}
                             {!! Form::text('address', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
+                                'data-stripe'  => 'address_line1',
                                 'data-parsley-trigger' => 'change focusout',
-                                'data-parsley-class-handler'    => '#address'
+                                'data-parsley-class-handler'    => '#address_line1'
 
                             ]) !!}
                         </div>
-                        <div class="form-group" id="city">
+                        <div class="form-group" id="address_city">
                             {!! Form::label(null, 'City:') !!}
                             {!! Form::text('city', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
+                                'data-stripe'  => 'address_city',
                                 'data-parsley-trigger' => 'change focusout',
-                                'data-parsley-class-handler'    => '#city'
+                                'data-parsley-class-handler'    => '#address_city'
 
                             ]) !!}
                         </div>
-                        <div class="form-group" id="postal_code">
+                        <div class="form-group" id="address_zip">
                             {!! Form::label(null, 'Postal Code:') !!}
                             {!! Form::text('postal_code', null, [
                                 'class' =>  'form-control',
                                 'required'  =>  'required',
+                                'data-stripe'  => 'address_zip',
                                 'data-parsley-trigger'  => 'change focusout',
-                                'data-parsley-class-handler'    => '#postal_code'
+                                'data-parsley-class-handler'    => '#address_zip'
 
                             ]) !!}
                         </div>

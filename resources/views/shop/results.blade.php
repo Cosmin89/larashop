@@ -5,17 +5,9 @@
 @endsection
 
 @section('content')
-     @if(Session::has('successful'))
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
-            <div id="charge-message" class="alert alert-success">
-                {{ Session::get('successful') }}
-            </div>
-        </div>
-    </div>
-    @endif
-    @foreach($products->chunk(3) as $productChunk)
-        @foreach($productChunk as $product)
+
+    @if(isset($details))
+        @foreach($details as $product)
         <div class="col-md-3">
             <div class="thumbnail">
                 <img src="{{ $product->image }}" alt="{{ $product->title }}" class="img-responsive" height="150" width="150"></a>
@@ -34,9 +26,13 @@
             </div>
         </div>
         @endforeach
-    @endforeach
+    @elseif(isset($message))
+        <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+            <div class="alert alert-warning">
+                {{ $message }}
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
-
-
-
-

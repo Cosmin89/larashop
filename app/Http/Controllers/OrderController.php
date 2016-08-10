@@ -29,9 +29,13 @@ class OrderController extends Controller
 
     public function show($payment_id)
     {
-         $order = Order::with(['address', 'products'])->where('payment_id', $payment_id)->first();
+        Stripe::setApiKey(env('STRIPE_SK'));
 
-        return view('order.show', ['order' => $order]);
+        $order = Order::with(['address', 'products'])->where('payment_id', $payment_id)->first();
+
+        $charge = Charge::retrieve($payment_id);
+        
+        return view('order.show', ['order' => $order, 'charge' => $charge]);
     }
 
     public function postOrder(Request $request)
@@ -82,6 +86,8 @@ class OrderController extends Controller
                         'amount'    =>  Cart::total() * 100,
                         'currency'  =>  'usd',
                         'customer'  =>  $customerID,
+                        'source'    =>  $customer->source,
+                        'receipt_email' =>  Auth::user()->email,
                         'metadata'  =>  [
                             'product_name'  => $item->name,
                             'product_price' =>  $item->price

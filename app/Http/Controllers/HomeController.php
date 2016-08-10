@@ -15,4 +15,19 @@ class HomeController extends Controller
 
         return view('shop.index', ['products' => $products]);
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $product = Product::where("title", "LIKE", "%".$search."%")->get();
+
+        if(count($product) > 0)
+        {
+            return view('shop.results')->withDetails($product)->withQuery($search);
+        } else {
+            return view('shop.results')->withMessage('No details found. Try to search again!');
+        }
+        
+    }
 }

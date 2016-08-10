@@ -21,6 +21,12 @@ Route::get('/product/{slug}', [
     'as'    => 'product.get'
 ]);
 
+
+Route::any('/search', [
+    'uses'  =>  'HomeController@search',
+    'as'    =>  'search'
+]);
+
 Route::group(['prefix' => 'user'], function() {
     Route::group(['middleware' => 'guest'], function() {
         Route::get('/signup', [

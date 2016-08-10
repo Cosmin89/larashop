@@ -30,10 +30,10 @@
               <li><a href="{{ route('user.signin') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Signin</a></li>
               <li><a href="{{ route('google.redirect') }}"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a></li>
             @endif
-            
           </ul>
         </li>
       </ul>
+        @include('templates.partials.search')
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
