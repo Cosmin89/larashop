@@ -28,7 +28,7 @@
                                     <td><img src="{{ $product->image }}" alt="" class="img-responsive img-square" width="30px" height="30px"></td>
                                     <td>{{ $product->stock }}</td>
                                     <td> 
-                                    <button class="btn btn-primary btn-detail open_modal" value="{{$product->id}}">Edit</button>
+                                    <button class="btn btn-primary btn-detail open_modal" value="{{$product->id}}"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                                     <button class="btn btn-danger btn-delete delete-product" value="{{$product->id}}">Delete</button>
                                     </td>
                                 </tr>
@@ -140,7 +140,7 @@
 
                     var product = '<tr id="product' + data.id + '"><td>' + data.title + '</td><td><a href="' + data.slug + '">' + data.slug + '</a></td><td>'
                     + data.description + '</td><td>' + data.price + '</td><td><img src="' + data.image + '" alt="" class="img-responsive img-square" width="30px" height="30px"></td><td>' + data.stock + '</td>';
-                    product += '<td><button class="btn btn-primary btn-detail open_modal" value="' + data.id + '">Edit</button>';
+                    product += '<td><button class="btn btn-primary btn-detail open_modal" value="' + data.id + '"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
                     product += ' <button class="btn btn-danger btn-delete delete-product" value="' + data.id + '">Delete</button></td></tr>';
 
                     if(state == "add"){

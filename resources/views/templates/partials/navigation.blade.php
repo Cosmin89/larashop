@@ -24,7 +24,7 @@
                 <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->avatar }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
               @endif
               <li role="separator" class="divider"></li>
-              <li><a href="{{ route('user.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+              <li><a href="{{ route('user.logout') }}"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             @else
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
               <li><a href="{{ route('user.signin') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Signin</a></li>
