@@ -17,9 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('google_id')->unique();
             $table->string('stripe_customer_id');
-            $table->string('avatar');
             $table->rememberToken();
             $table->timestamps();
         });

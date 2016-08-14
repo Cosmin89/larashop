@@ -53,7 +53,7 @@
                             {{ $review->content }} 
                     </article> 
 
-                @endforeach
+            @endforeach
 
                 <hr>
         </div>

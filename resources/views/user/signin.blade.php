@@ -20,9 +20,11 @@
                 <input type="password" id="password" name="password" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</button>
-            <a href="{{ route('google.redirect') }}" class="btn btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a>
+            <a href="{{ route('social.redirect', ['provider' => 'google'])  }}" class="btn btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a>
             {{ csrf_field() }}
         </form>
+
+        <p>Don't have an account ? <a href="{{ route('user.signup') }}">Sign Up</a>               
     </div>
 @endsection
 

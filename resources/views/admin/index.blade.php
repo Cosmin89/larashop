@@ -23,8 +23,8 @@
                                 </td>
                                 <td>{{ $user->email }} <input type="hidden" name="email" value="{{ $user->email }}"></td>
                                 <td>{{ $user->stripe_customer_id }}</td>
-                                <td><input type="checkbox"{{ $user->hasRole('User') ? 'checked' : '' }} name="role_user"></td>
-                                <td><input type="checkbox"{{ $user->hasRole('Admin') ? 'checked' : '' }} name="role_admin"></td>
+                                <td><input type="checkbox"{{ $user->hasRole('user') ? 'checked' : '' }} name="role_user"></td>
+                                <td><input type="checkbox"{{ $user->hasRole('administrator') ? 'checked' : '' }} name="role_admin"></td>
                                 <td><button type="submit" class="btn btn-primary btn-sm">Assign Roles</button></td>
                             {!! Form::close() !!}
                             </tr>

@@ -52,7 +52,9 @@
                 <ul class="media-list">
                     <li class="media">
                         <div class="media-left">
-                            <img class="media-object img-circle" src="{{ $review->user->avatar }}" alt="...">
+                            @foreach($review->user->socials as $social)
+                            <img class="media-object img-circle" src="{{ $social->avatar }}" alt="...">
+                            @endforeach
                         </div>
                        
                         <div class="media-body">

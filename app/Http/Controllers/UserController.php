@@ -8,6 +8,7 @@ use larashop\Role;
 use larashop\Http\Requests;
 use Auth;
 use Socialite;
+use larashop\Social;
 use larashop\Order;
 
 class UserController extends Controller
@@ -19,7 +20,6 @@ class UserController extends Controller
 
     public function postSignup(Request $request)
     {
-        $role_user = Role::where('name', 'User')->first();
 
         $this->validate($request, [
             'name'  =>  'required|min:4',
@@ -34,7 +34,9 @@ class UserController extends Controller
         ]);
 
         $user->save();
-        $user->roles()->attach($role_user);
+
+        $role = Role::whereName('user')->first();
+        $user->assignRole($role);
 
         Auth::login($user);
         return redirect()->back();
@@ -54,8 +56,15 @@ class UserController extends Controller
 
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
-            if(Auth::user()->name == "Admin") {
-                    return redirect()->action('AdminController@index');
+
+            if(Auth::user()->hasRole('user'))
+            {
+                return redirect()->route('user.profile', ['name' => Auth::user()->name]);
+            }
+
+            if(Auth::user()->hasRole('administrator'))
+            {
+                return redirect()->route('admin.index');
             }
 
             return redirect()->action('UserController@getProfile', ['name' => Auth::user()->name]);
@@ -83,39 +92,69 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
-    {
-        return Socialite::driver('google')->scopes(['profile', 'email'])->redirect();
-    }
 
-     /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleToProviderCallback()
-    {
-        $role_user = Role::where('name', 'User')->first();
+   public function getSocialRedirect($provider)
+   {
+       $providerKey = \Config::get('services.' . $provider);
+       if(empty($providerKey))
+                return view('pages.status')
+                        ->with('error', 'No such provider');
 
-        $user = Socialite::driver('google')->user();
-        
-        if($authUser = User::where('google_id', $user->id)->first()) {      
-            Auth::login($authUser, true);
+        return Socialite::driver($provider)->redirect();
+   }
 
-        } else {
-            $authUser = new User([
-                'name' =>  $user->name,
-                'email'    =>  $user->email,
-                'google_id'    =>  $user->id,
-                'avatar'   =>  $user->avatar
-            ]);
+   public function getSocialHandle($provider)
+   {
+       $user = Socialite::driver($provider)->user();
 
-            $authUser->save();
-            $authUser->roles()->attach($role_user);
-        }
+       $socialUser = null;
 
-        return redirect()->back();
+       $userCheck = User::where('email', $user->email)->first();
+       if(!empty($userCheck))
+       {
+           $socialUser = $userCheck;
+       }
+       else
+       {
+           $sameSocialId = Social::where('social_id', $user->id)->where('provider', $provider)->first();
 
-    }
+           if(empty($sameSocialId))
+           {
+               $newSocialUser = new User();
+               $newSocialUser->email = $user->email;
+               $newSocialUser->name = $user->name;
+               $newSocialUser->save();
+
+               $socialData = new Social();
+               $socialData->social_id = $user->id;
+               $socialData->provider = $provider;
+               $socialData->avatar = $user->avatar;
+               $newSocialUser->socials()->save($socialData);
+
+               $role = Role::whereName('user')->first();
+               $newSocialUser->assignRole($role);
+
+               $socialUser = $newSocialUser;
+           }
+           else
+           {
+               $socialUser = $sameSocialId->user;
+           }
+       }
+
+       Auth::login($socialUser, true);
+
+       if(Auth::user()->hasRole('user'))
+       {
+           return redirect()->route('user.profile', ['name' => Auth::user()->name]);
+       }
+
+       if(Auth::user()->hasRole('administrator'))
+       {
+           return redirect()->route('admin.index');
+       }
+
+       return abort(500);
+   }
 
 }

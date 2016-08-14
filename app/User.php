@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google_id', 'stripe_customer_id', 'avatar', 
+        'name', 'email', 'password', 'stripe_customer_id', 
     ];
 
     /**
@@ -56,18 +56,33 @@ class User extends Authenticatable
         return false;
     }
 
-    public function hasRole($role)
+     public function hasRole($name)
     {
-        if($this->roles()->where('name', $role)->first())
+        foreach($this->roles as $role)
         {
-            return true;
+            if($role->name == $name) return true;
         }
 
         return false;
     }
 
+    public function assignRole($role)
+    {
+        return $this->roles()->attach($role);
+    }
+
+    public function removeRole($role)
+    {
+        return $this->roles()->detach($role);
+    }
+
     public function likedReviews()
     {
         return $this->morphedByMany('larashop\Review', 'likeable')->whereDeletedAt(null);
+    }
+
+    public function socials()
+    {
+        return $this->hasMany('larashop\Social');
     }
 }

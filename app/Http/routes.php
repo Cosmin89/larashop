@@ -49,19 +49,19 @@ Route::group(['prefix' => 'user'], function() {
             'as'   => 'user.signin' 
         ]);
 
-        Route::get('/google', [
-            'uses'  =>  'UserController@redirectToProvider',
-            'as'    =>  'google.redirect'
+        Route::get('/social/redirect/{provider}', [
+            'uses'  =>  'UserController@getSocialRedirect',
+            'as'    =>  'social.redirect'
         ]);
-        
-        Route::get('/callback', [
-            'uses'  =>  'UserController@handleToProviderCallback',
-            'as'    =>  'google.callback'
+
+        Route::get('/social/handle/{provider}', [
+            'uses'  =>  'UserController@getSocialHandle',
+            'as'    =>  'social.handle'
         ]);
     });
 
     Route::group(['middleware' => 'auth'], function() {
-        Route::group(['middleware' => 'roles', 'roles' => ['User', 'Admin']], function(){
+        Route::group(['middleware' => 'roles', 'roles' => ['user', 'administrator']], function(){
             Route::get('/{name}/profile', [
                 'uses'  => 'UserController@getProfile',
                 'as'    => 'user.profile' 
@@ -102,7 +102,7 @@ Route::group(['prefix' => 'user'], function() {
 
 Route::group(['prefix' => 'admin'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::group(['middleware' => 'roles', 'roles' => ['Admin']], function() {
+        Route::group(['middleware' => 'roles', 'roles' => ['administrator']], function() {
             Route::get('/dashboard', [
                 'uses'  =>  'AdminController@index',
                 'as'    =>  'admin.index'
