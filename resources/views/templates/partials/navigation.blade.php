@@ -29,7 +29,7 @@
               <li><a href="{{ route('user.signup') }}">Signup</a></li>
               <li><a href="{{ route('user.signin') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Signin</a></li>
               <li><a href="{{ route('social.redirect', ['provider' => 'google']) }}"><i class="fa fa-google" aria-hidden="true"></i> Signin with Google</a></li>
-              <li><a href="{{ route('social.redirect', ['provider' => 'facebook']) }}"><i class="fa fa-facebook" aria-hidden="true"></i> Signin with Facebook</a></li>
+              <li><a href="{{ route('social.redirect', ['provider' => 'github']) }}"><i class="fa fa-github" aria-hidden="true"></i> Signin with Github</a></li>
             @endif
           </ul>
         </li>

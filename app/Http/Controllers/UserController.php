@@ -10,6 +10,7 @@ use Auth;
 use Socialite;
 use larashop\Social;
 use larashop\Order;
+use ReCaptcha\ReCaptcha;
 
 class UserController extends Controller
 {
@@ -24,8 +25,14 @@ class UserController extends Controller
         $this->validate($request, [
             'name'  =>  'required|min:4',
             'email' => 'email|required|unique:users',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4',
+            'g-recaptcha-response' => 'required'
         ]);
+
+        if($this->captchaCheck($request) == false)
+        {
+            return redirect()->back();
+        }
 
         $user = new User([
             'name'  => $request->input('name'),
@@ -156,5 +163,20 @@ class UserController extends Controller
 
        return abort(500);
    }
+
+    private function captchaCheck(Request $request)
+    {
+        $response = $request->input('g-recaptcha-response');
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+        $secret   = env('RE_CAP_SECRET');
+
+        $recaptcha = new ReCaptcha($secret);
+        $resp = $recaptcha->verify($response, $remoteip);
+        if($resp->isSuccess()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

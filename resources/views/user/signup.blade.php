@@ -23,8 +23,14 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" class="form-control">
             </div>
+
+            <div class="g-recaptcha" data-sitekey="{{ env('RE_CAP_SITE') }}"></div><br>
             <button class="btn btn-primary">Sign Up</button>
+
             {{ csrf_field() }}
         </form>
     </div>
+@endsection
+@section('scripts')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
