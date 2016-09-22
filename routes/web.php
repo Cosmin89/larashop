@@ -36,7 +36,6 @@ Route::group(['prefix' => 'user'], function() {
 
         Route::post('/signup', [
             'uses' => 'UserController@postSignup',
-            'as'   => 'user.signup' 
         ]);
 
         Route::get('/signin', [
@@ -46,7 +45,6 @@ Route::group(['prefix' => 'user'], function() {
 
         Route::post('/signin', [
             'uses' => 'UserController@postSignin',
-            'as'   => 'user.signin' 
         ]);
 
         Route::get('/social/redirect/{provider}', [
@@ -120,7 +118,6 @@ Route::group(['prefix' => 'admin'], function() {
 
             Route::post('/product', [
                 'uses'  =>  'AdminController@postCreate',
-                'as'    =>  'admin.create'
             ]);
 
             Route::get('/product/{product_id}', [

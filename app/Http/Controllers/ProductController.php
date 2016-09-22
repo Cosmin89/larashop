@@ -65,7 +65,7 @@ class ProductController extends Controller
         return redirect()->route('cart.index');
     }
 
-    public function postReview($id, Request $request)
+    public function postReview(Request $request)
     {
         $this->validate($request, [
             'title' =>  'required|min:5',
