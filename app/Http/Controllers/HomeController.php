@@ -8,20 +8,20 @@ use larashop\Http\Requests;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Product $product)
     {
-        $products = Product::paginate(8);
+        $products = $product->paginate(8);
 
-        return view('shop.index', ['products' => $products]);
+        return view('shop.index')->withProducts($products);
     }
 
-    public function search(Request $request)
+    public function search(Request $request, Product $product)
     {
         $search = $request->input('search');
 
-        $products = Product::search($search)->paginate(8);
+        $products = $product->search($search)->paginate(8);
 
-        return view('shop.results', ['products' => $products]);
+        return view('shop.results')->withProducts($products);
         
     }
 }
