@@ -14,18 +14,18 @@ use larashop\Http\Requests;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        $users = User::all();
+        $users = $user->all();
 
-        return view('admin.index', ['users' => $users]);
+        return view('admin.index')->withUsers($users);
     }
 
-    public function products()
+    public function products(Product $product)
     {
-        $products = Product::all();
+        $products = $product->all();
 
-        return view('admin.products', ['products' => $products]);
+        return view('admin.products')->withProducts($products);
     }
 
     public function getCreate(){
