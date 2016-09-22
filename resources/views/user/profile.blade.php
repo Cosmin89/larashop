@@ -5,6 +5,7 @@
 <div class="col-md-8 col-md-offset-2">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#orders">Orders</a></li>
+        <li><a data-toggle="tab" href="#address">Addresses</a></li>
         <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
         <li><a data-toggle="tab" href="#likes">Likes</a></li>
     </ul>
@@ -45,6 +46,15 @@
                 @endforeach
             </div>
         </div>
+        <div id="address" class="tab-pane fade">
+             <h3>My Addresses</h3>
+             @foreach($user->addresses as $address)
+                  {{ $address->address }} <br>
+                  {{ $address->city }} <br>
+                  {{ $address->postal_code }} <br>
+                  <hr>
+             @endforeach
+        </div>
         <div id="reviews" class="tab-pane fade">
         <h3>My Reviews</h3>
             @foreach($user->reviews as $review)
@@ -54,8 +64,7 @@
                     </article> 
 
             @endforeach
-
-                <hr>
+            <hr>
         </div>
         <div id="likes" class="tab-pane fade">
             <h3>My Likes: {{ $user->likedReviews->count() }}</h3> 

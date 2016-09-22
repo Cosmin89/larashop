@@ -2,7 +2,6 @@
 
 namespace larashop;
 
-use larashop\Address;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -11,13 +10,11 @@ class Order extends Model
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo('larashop\Address');
     }
 
     public function products()
     {
         return $this->belongsToMany('larashop\Product')->withPivot('quantity')->withTimestamps();
     }
-
-   
 }

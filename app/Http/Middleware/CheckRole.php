@@ -27,6 +27,5 @@ class CheckRole
         }
 
         return response('Insufficient permissions', 401);
-        
     }
 }

@@ -1,23 +1,25 @@
 <?php
+
 namespace larashop\Http\Controllers;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Request;
-
 use larashop\User;
-use larashop\Http\Requests;
-use Auth;
-use Cart;
 use larashop\Order;
 use larashop\Product;
 use larashop\Address;
+
 use Stripe\Stripe;
 use Stripe\Charge;
 use Stripe\Customer;
 
+use Auth;
+use Cart;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
+use larashop\Http\Requests;
+
 class OrderController extends Controller
 {
-
     public function index()
     {
         if(!Cart::count()){
@@ -46,12 +48,18 @@ class OrderController extends Controller
         
         $token = $request->input('stripeToken');
 
-        $address = Address::firstOrCreate([
-            'address'  => $request->input('address'),
-            'city' => $request->input('city'),
-            'postal_code' => $request->input('postal_code')
-        ]);
-
+        if($request->input('addressId')){
+            $address = Address::where('id', $request->input('addressId'))->first();
+        }else {
+            $address = Address::firstOrCreate([
+                'address'  => $request->input('address'),
+                'city'      =>  $request->input('city'),
+                'postal_code'   =>  $request->input('postal_code'),
+                'user_id'   => $request->user()->id
+            ]);
+        }
+      
+        
         Stripe::setApiKey(env('STRIPE_SK'));
 
         $cart = Cart::content();
@@ -60,9 +68,9 @@ class OrderController extends Controller
             try {
                 $customer = Customer::create([
                     'source' => $token,
-                    'email' =>  Auth::user()->email,
+                    'email' =>  $request->user()->email,
                     'metadata'  =>  [
-                        "name"    =>  Auth::user()->name,
+                        "name"    =>  $request->user()->name,
                     ]
                 ]);
             } catch(\Stripe\Error\Card $e) {
@@ -73,8 +81,8 @@ class OrderController extends Controller
 
             $customerID = $customer->id;
 
-            if(!Auth::user()->stripe_customer_id) {
-                 $user = User::where('email', Auth::user()->email)->update(['stripe_customer_id' => $customerID]);
+            if(!$request->user()->stripe_customer_id) {
+                $user = User::where('email', $request->user()->email)->update(['stripe_customer_id' => $customerID]);
             }
         } else {
             $customerID = User::where('email', $email)->value('stripe_customer_id');
@@ -87,7 +95,7 @@ class OrderController extends Controller
                         'currency'  =>  'usd',
                         'customer'  =>  $customerID,
                         'source'    =>  $customer->source,
-                        'receipt_email' =>  Auth::user()->email,
+                        'receipt_email' =>  $request->user()->email,
                         'metadata'  =>  [
                             'product_name'  => $item->name,
                             'product_price' =>  $item->price
@@ -95,20 +103,19 @@ class OrderController extends Controller
                     ]);
             }
             
-             $order = new Order();
+            $order = new Order();
 
-             $order->amount = Cart::total();
-             $order->address_id = $address->id;
-             $order->payment_id = $charge->id;
-           
-             Auth::user()->orders()->save($order);
+            $order->amount = Cart::total();
+            $order->address_id = $address->id;
+            $order->payment_id = $charge->id;
+        
+            $request->user()->orders()->save($order);
         
         } catch (\Stripe\Error\Card $e) {
             return redirect()->route('order')
                 ->withErrors($e->getMessage())
                 ->withInput();
         }
-
        
         foreach($cart as $item) {
             $order->products()->attach($item->id, ['quantity' => $item->qty]);
@@ -123,5 +130,4 @@ class OrderController extends Controller
         return redirect()->route('shop.index')
             ->with('successful', 'Your purchase was successful!');
     }
-    
 }

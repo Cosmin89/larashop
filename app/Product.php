@@ -2,11 +2,13 @@
 
 namespace larashop;
 
-use larashop\Order;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use Searchable;
+
     protected $fillable = ['title', 'slug', 'description', 'price', 'image', 'stock'];
     
     public $quantity = null;
@@ -43,5 +45,15 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany('larashop\Review');
+    }
+
+    public function searchableAs()
+    {
+        return 'product_index';
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

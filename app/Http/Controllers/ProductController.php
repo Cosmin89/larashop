@@ -4,18 +4,18 @@ namespace larashop\Http\Controllers;
 
 use larashop\Product;
 use larashop\Review;
-use Illuminate\Http\Request;
-use larashop\Http\Requests;
+
 use Cart;
 use Auth;
 
+use Illuminate\Http\Request;
+use larashop\Http\Requests;
+
 class ProductController extends Controller
 {
-    public function getProduct($slug)
+    public function getProduct(Product $product)
     {
-        $product = Product::where('slug', $slug)->first();
-
-        return view('products.item', ['product' => $product]);
+        return view('products.item')->withProduct($product);
     }
 
     public function cartIndex()
@@ -78,11 +78,9 @@ class ProductController extends Controller
             'title' =>  $request->input('title'),
             'content'   =>  $request->input('content'),
             'product_id'    =>  $product->id,
-            'user_id'   =>  Auth::user()->id
+            'user_id'   =>  $request->user()->id
         ]);
 
         return redirect()->back();
     }
-
-    
 }

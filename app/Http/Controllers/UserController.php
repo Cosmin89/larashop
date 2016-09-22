@@ -1,20 +1,23 @@
 <?php
+
 namespace larashop\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Auth;
+use Socialite;
+use Session;
 
 use larashop\User;
 use larashop\Role;
-use larashop\Http\Requests;
-use Auth;
-use Socialite;
 use larashop\Social;
 use larashop\Order;
 use ReCaptcha\ReCaptcha;
 
+use Illuminate\Http\Request;
+use larashop\Http\Requests;
+
 class UserController extends Controller
 {
-    public function getSignup()
+     public function getSignup()
     {
         return view('user.signup');
     }
@@ -46,7 +49,8 @@ class UserController extends Controller
         $user->assignRole($role);
 
         Auth::login($user);
-        return redirect()->back();
+
+        return redirect()->route('user.profile', ['name' => $request->user()->name]);
     }
 
     public function getSignin()
@@ -64,34 +68,32 @@ class UserController extends Controller
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
 
-            if(Auth::user()->hasRole('user'))
+            if($request->user()->hasRole('user'))
             {
                 return redirect()->route('user.profile', ['name' => Auth::user()->name]);
             }
 
-            if(Auth::user()->hasRole('administrator'))
+            if($request->user()->hasRole('administrator'))
             {
                 return redirect()->route('admin.index');
             }
 
-            return redirect()->action('UserController@getProfile', ['name' => Auth::user()->name]);
+            return redirect()->route('user.profile', ['name' => Auth::user()->name]);
         }
 
         return redirect()->back();
     }
 
-    public function getProfile($name)
+    public function getProfile(User $user)
     {
-        $user = User::find(Auth::user()->id);
-
-        return view('user.profile')->with('user', $user);
+        return view('user.profile')->withUser($user);
     }
 
     public function getLogout()
     {
         Auth::logout();
 
-        return redirect()->back();
+        return redirect()->route('user.signin');
     }
 
     /**
@@ -178,5 +180,4 @@ class UserController extends Controller
             return false;
         }
     }
-
 }

@@ -2,15 +2,13 @@
 
 namespace larashop;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use Notifiable;
+
     protected $fillable = [
         'name', 'email', 'password', 'stripe_customer_id', 
     ];
@@ -33,7 +31,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('larashop\Review');
     }
-    
+
+    public function addresses()
+    {
+        return $this->hasMany('larashop\Address');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('larashop\Role', 'user_role', 'user_id', 'role_id');
@@ -66,16 +69,6 @@ class User extends Authenticatable
         return false;
     }
 
-    public function assignRole($role)
-    {
-        return $this->roles()->attach($role);
-    }
-
-    public function removeRole($role)
-    {
-        return $this->roles()->detach($role);
-    }
-
     public function likedReviews()
     {
         return $this->morphedByMany('larashop\Review', 'likeable')->whereDeletedAt(null);
@@ -84,5 +77,10 @@ class User extends Authenticatable
     public function socials()
     {
         return $this->hasMany('larashop\Social');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
     }
 }

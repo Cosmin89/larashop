@@ -1,50 +1,67 @@
 @extends('templates.app')
 
 @section('content')
+     @if(Session::has('error'))
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+            <div id="charge-message" class="alert alert-success">
+                {{ Session::get('error') }}
+            </div>
+        </div>
+    </div>
+    @endif
     {!! Form::open(['route' => ['order.post'], 'data-parsley-validate', 'id' => 'payment-form']) !!}
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        
-                        <h3>Shipping address</h3>
-                         
-                        <hr>
-                        <div class="form-group" id="address_line1">
-                            {!! Form::label(null, 'Address:') !!}
-                            {!! Form::text('address', null, [
-                                'class' =>  'form-control',
-                                'required'  =>  'required',
-                                'data-stripe'  => 'address_line1',
-                                'data-parsley-trigger' => 'change focusout',
-                                'data-parsley-class-handler'    => '#address_line1'
+    @if(count(Auth::user()->addresses) != 0)  
+        <select name="addressId" class="form-control input-sm">
+            @foreach(Auth::user()->addresses as $address)
+                @for($num = 1; $num <= count($address); $num++)
+                    <option value="{{ $address->id }}" @if($num == $address->id) selected="selected" @endif>{{ $address->fullAddress() }}</option>
+                @endfor
+            @endforeach
+        </select> 
+    @else
+    <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Shipping address</h3>
+                    
+                    <hr>
+                    <div class="form-group" id="address_line1">
+                        {!! Form::label(null, 'Address:') !!}
+                        {!! Form::text('address', null, [
+                            'class' =>  'form-control',
+                            'required'  =>  'required',
+                            'data-stripe'  => 'address_line1',
+                            'data-parsley-trigger' => 'change focusout',
+                            'data-parsley-class-handler'    => '#address_line1',
 
-                            ]) !!}
-                        </div>
-                        <div class="form-group" id="address_city">
-                            {!! Form::label(null, 'City:') !!}
-                            {!! Form::text('city', null, [
-                                'class' =>  'form-control',
-                                'required'  =>  'required',
-                                'data-stripe'  => 'address_city',
-                                'data-parsley-trigger' => 'change focusout',
-                                'data-parsley-class-handler'    => '#address_city'
+                        ]) !!}
+                    </div>
+                    <div class="form-group" id="address_city">
+                        {!! Form::label(null, 'City:') !!}
+                        {!! Form::text('city', null, [
+                            'class' =>  'form-control',
+                            'required'  =>  'required',
+                            'data-stripe'  => 'address_city',
+                            'data-parsley-trigger' => 'change focusout',
+                            'data-parsley-class-handler'    => '#address_city',
 
-                            ]) !!}
-                        </div>
-                        <div class="form-group" id="address_zip">
-                            {!! Form::label(null, 'Postal Code:') !!}
-                            {!! Form::text('postal_code', null, [
-                                'class' =>  'form-control',
-                                'required'  =>  'required',
-                                'data-stripe'  => 'address_zip',
-                                'data-parsley-trigger'  => 'change focusout',
-                                'data-parsley-class-handler'    => '#address_zip'
+                        ]) !!}
+                    </div>
+                    <div class="form-group" id="address_zip">
+                        {!! Form::label(null, 'Postal Code:') !!}
+                        {!! Form::text('postal_code', null, [
+                            'class' =>  'form-control',
+                            'required'  =>  'required',
+                            'data-stripe'  => 'address_zip',
+                            'data-parsley-trigger'  => 'change focusout',
+                            'data-parsley-class-handler'    => '#address_zip',
 
-                            ]) !!}
-                        </div>
-                    </div>   
-                </div>
-
+                        ]) !!}
+                    </div>
+                </div>   
+            </div>
+            @endif      
             <h3>Payment</h3>
             <hr>
 

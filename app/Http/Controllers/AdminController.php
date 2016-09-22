@@ -6,10 +6,10 @@ use larashop\Product;
 use larashop\Order;
 use larashop\User;
 use larashop\Role;
-use Illuminate\Http\Request;
 use Auth;
 use DB;
 
+use Illuminate\Http\Request;
 use larashop\Http\Requests;
 
 class AdminController extends Controller
@@ -100,10 +100,10 @@ class AdminController extends Controller
         $user->roles()->detach();
 
         if($request['role_user']) {
-            $user->assignRole(Role::where('name', 'user')->first());
+            $user->roles()->attach(Role::where('name', 'user')->first());
         }
         if($request['role_admin']) {
-            $user->assignRole(Role::where('name', 'administrator')->first());
+            $user->roles()->attach(Role::where('name', 'administrator')->first());
         }
 
         return redirect()->back();

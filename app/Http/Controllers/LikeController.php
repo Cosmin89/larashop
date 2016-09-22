@@ -3,9 +3,10 @@
 namespace larashop\Http\Controllers;
 
 use larashop\Like;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use larashop\Http\Requests;
+
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
