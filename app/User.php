@@ -22,6 +22,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getAvatarUrl()
+    {
+        return "https://www.gravatar.com/avatar/{{ md5($this->email) }}?d=mm&s=40";
+    }
+
     public function orders()
     {
         return $this->hasMany('larashop\Order');
@@ -59,7 +64,7 @@ class User extends Authenticatable
         return false;
     }
 
-     public function hasRole($name)
+    public function hasRole($name)
     {
         foreach($this->roles as $role)
         {
@@ -68,15 +73,25 @@ class User extends Authenticatable
 
         return false;
     }
+    
+    public function assignRole($role)
+    {
+        return $this->roles()->attach($role);
+    }
 
     public function likedReviews()
     {
         return $this->morphedByMany('larashop\Review', 'likeable')->whereDeletedAt(null);
     }
 
-    public function socials()
+    public function social()
     {
         return $this->hasMany('larashop\Social');
+    }
+
+    public function hasSocialLinked($service)
+    {
+        return (bool) $this->social->where('service', $service)->count();
     }
 
     public function getRouteKeyName()

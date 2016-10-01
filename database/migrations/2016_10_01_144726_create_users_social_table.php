@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSocialLoginsTable extends Migration
+class CreateUsersSocialTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateSocialLoginsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_logins', function (Blueprint $table) {
+        Schema::create('users_social', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('provider', 32);
-            $table->text('social_id');
-            $table->text('avatar');
+            $table->integer('user_id')->unsigned();
+            $table->string('social_id');
+            $table->string('service');
+            $table->string('avatar')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateSocialLoginsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_logins');
+        Schema::dropIfExists('users_social');
     }
 }

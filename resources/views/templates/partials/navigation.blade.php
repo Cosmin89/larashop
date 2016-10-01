@@ -21,7 +21,7 @@
               @if(Auth::user()->hasRole('Admin'))
                 <li><a href="{{ route('admin.index') }}">Dashboard</a></li>
               @else
-                <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="@foreach(Auth::user()->socials as $social) {{ $social->avatar }} @endforeach" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
+                <li><a href="{{ route('user.profile', ['name' => Auth::user()->name]) }}"><img src="{{ Auth::user()->getAvatarUrl() }}" height="25" width="25" alt="" class="img-circle"/> User Profile</a> </li>
               @endif
               <li role="separator" class="divider"></li>
               <li><a href="{{ route('user.logout') }}"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>

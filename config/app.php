@@ -180,6 +180,7 @@ return [
         larashop\Providers\AuthServiceProvider::class,
         larashop\Providers\EventServiceProvider::class,
         larashop\Providers\RouteServiceProvider::class,
+        larashop\Providers\SocialServiceProvider::class,
 
     ],
 

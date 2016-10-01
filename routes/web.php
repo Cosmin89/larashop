@@ -47,14 +47,14 @@ Route::group(['prefix' => 'user'], function() {
             'uses' => 'UserController@postSignin',
         ]);
 
-        Route::get('/social/redirect/{provider}', [
-            'uses'  =>  'UserController@getSocialRedirect',
+        Route::get('/login/{service}', [
+            'uses'  =>  'SocialLoginController@redirect',
             'as'    =>  'social.redirect'
         ]);
 
-        Route::get('/social/handle/{provider}', [
-            'uses'  =>  'UserController@getSocialHandle',
-            'as'    =>  'social.handle'
+        Route::get('/login/{service}/callback', [
+            'uses'  =>  'SocialLoginController@callback',
+            'as'    =>  'social.callback'
         ]);
     });
 

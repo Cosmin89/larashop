@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'larashop\Events\SomeEvent' => [
-            'larashop\Listeners\EventListener',
+        'App\Events\Social\GoogleAccountWasLinked' => [
+            'App\Listeners\Social\SendGoogleLinkedEmail',
         ],
     ];
 

@@ -17,7 +17,8 @@ use larashop\Http\Requests;
 
 class UserController extends Controller
 {
-     public function getSignup()
+    
+    public function getSignup()
     {
         return view('user.signup');
     }
@@ -101,70 +102,6 @@ class UserController extends Controller
      *
      * @return Response
      */
-
-   public function getSocialRedirect($provider)
-   {
-       $providerKey = \Config::get('services.' . $provider);
-       if(empty($providerKey))
-                return view('pages.status')
-                        ->with('error', 'No such provider');
-
-        return Socialite::driver($provider)->redirect();
-   }
-
-   public function getSocialHandle($provider)
-   {
-       $user = Socialite::driver($provider)->user();
-
-       $socialUser = null;
-
-       $userCheck = User::where('email', $user->email)->first();
-       if(!empty($userCheck))
-       {
-           $socialUser = $userCheck;
-       }
-       else
-       {
-           $sameSocialId = Social::where('social_id', $user->id)->where('provider', $provider)->first();
-
-           if(empty($sameSocialId))
-           {
-               $newSocialUser = new User();
-               $newSocialUser->email = $user->email;
-               $newSocialUser->name = $user->name;
-               $newSocialUser->save();
-
-               $socialData = new Social();
-               $socialData->social_id = $user->id;
-               $socialData->provider = $provider;
-               $socialData->avatar = $user->avatar;
-               $newSocialUser->socials()->save($socialData);
-
-               $role = Role::whereName('user')->first();
-               $newSocialUser->assignRole($role);
-
-               $socialUser = $newSocialUser;
-           }
-           else
-           {
-               $socialUser = $sameSocialId->user;
-           }
-       }
-
-       Auth::login($socialUser, true);
-
-       if(Auth::user()->hasRole('user'))
-       {
-           return redirect()->route('user.profile', ['name' => Auth::user()->name]);
-       }
-
-       if(Auth::user()->hasRole('administrator'))
-       {
-           return redirect()->route('admin.index');
-       }
-
-       return abort(500);
-   }
 
     private function captchaCheck(Request $request)
     {

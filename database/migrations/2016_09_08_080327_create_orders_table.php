@@ -17,9 +17,9 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('amount');
             $table->integer('address_id')->unsigned();
-            $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('payment_id');
             $table->timestamps();
         });
