@@ -60,9 +60,14 @@ Route::group(['prefix' => 'user'], function() {
 
     Route::group(['middleware' => 'auth'], function() {
         Route::group(['middleware' => 'roles', 'roles' => ['user', 'administrator']], function(){
-            Route::get('/{user}/profile', [
+            Route::get('profile/{user}', [
                 'uses'  => 'UserController@getProfile',
                 'as'    => 'user.profile' 
+            ]);
+
+            Route::post('profile/{user}', [
+                'uses'  =>  'UserController@updateProfile',
+                'as'    =>  'profile.update'
             ]);
 
             Route::get('/logout', [
@@ -94,6 +99,8 @@ Route::group(['prefix' => 'user'], function() {
                 'uses'  =>  'LikeController@likeReview',
                 'as'    =>  'review.like'
             ]);
+
+            Route::get('/braintree/token', 'BraintreeTokenController@token')->name('braintree.token');
         });
     });
 });

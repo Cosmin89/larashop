@@ -18,7 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->string('stripe_customer_id')->nullable();
+            $table->string('customerId')->nullable();
+            $table->string('cardType')->nullable();
+            $table->string('last4')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

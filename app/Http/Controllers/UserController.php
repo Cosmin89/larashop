@@ -10,6 +10,7 @@ use larashop\User;
 use larashop\Role;
 use larashop\Social;
 use larashop\Order;
+use larashop\Address;
 use ReCaptcha\ReCaptcha;
 
 use Illuminate\Http\Request;
@@ -88,6 +89,25 @@ class UserController extends Controller
     public function getProfile(User $user)
     {
         return view('user.profile')->withUser($user);
+    }
+
+    public function updateProfile(User $user, Request $request)
+    {
+        $address = Address::where('user_id', $user->id)->first();
+
+        $this->validate($request, [
+            'address'  =>  'required',
+            'city'      =>  'required',
+            'postal_code'   =>  'required',
+        ]);
+
+        $address->update([
+            'address'    =>  $request->input('address'),
+            'city'     =>  $request->input('city'),
+            'postal_code'      =>  $request->input('postal_code')
+        ]);
+
+       return redirect()->route('user.profile', ['name' => Auth::user()->name]);
     }
 
     public function getLogout()

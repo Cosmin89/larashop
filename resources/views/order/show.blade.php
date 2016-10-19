@@ -14,8 +14,8 @@
                 {{ $order->address->postal_code }} <br>
 
                 <h4>Payment method</h4>
-                {{ $charge->source->brand }} | Last 4 digits: {{ $charge->source->last4 }}
-                
+                    {{ $order->address->user->cardType }} | 
+                    {{ $order->address->user->last4 }} <br>
             </div>
             <div class="col-md-6">
                 <h4>Items</h4>

@@ -171,7 +171,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
-
+        Laravel\Cashier\CashierServiceProvider::class,
         /*
          * Application Service Providers...
          */

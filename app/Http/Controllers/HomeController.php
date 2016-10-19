@@ -10,9 +10,11 @@ class HomeController extends Controller
 {
     public function index(Product $product)
     {
+        
         $products = $product->paginate(8);
 
         return view('shop.index')->withProducts($products);
+        
     }
 
     public function search(Request $request, Product $product)

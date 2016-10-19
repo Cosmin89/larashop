@@ -8,6 +8,7 @@ use larashop\Role;
 use larashop\Social;
 use Socialite;
 
+use Braintree_Customer;
 use Illuminate\Http\Request;
 
 use larashop\Http\Requests;
@@ -32,9 +33,10 @@ class SocialLoginController extends Controller
         $user = $this->getExistingUser($serviceUser, $service);
 
         if(!$user) {
+            
             $user = User::create([
                 'name'  =>  $serviceUser->getName(),
-                'email' =>  $serviceUser->getEmail()
+                'email' =>  $serviceUser->getEmail(),
             ]);
 
             $role = Role::whereName('user')->first();

@@ -5,7 +5,7 @@
 <div class="col-md-8 col-md-offset-2">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#orders">Orders</a></li>
-        <li><a data-toggle="tab" href="#address">Addresses</a></li>
+        <li><a data-toggle="tab" href="#address">Address</a></li>
         <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
         <li><a data-toggle="tab" href="#likes">Likes</a></li>
     </ul>
@@ -47,13 +47,37 @@
             </div>
         </div>
         <div id="address" class="tab-pane fade">
-             <h3>My Addresses</h3>
-             @foreach($user->addresses as $address)
-                  {{ $address->address }} <br>
-                  {{ $address->city }} <br>
-                  {{ $address->postal_code }} <br>
-                  <hr>
-             @endforeach
+             <h3>My Address</h3>
+             <form action="{{ route('profile.update', $user) }}" method="post">
+              @foreach($user->addresses as $address)
+                <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                    <label for="address" class="control-label">Address</label>
+                    <input type="text" name="address" class="form-control" id="address" value="{{ Request::old('address') ?: $address->address }}">
+                    @if($errors->has('address'))
+                        <span class="help-block">{{ $errors->first('address') }}</span>
+                    @endif
+                </div>
+                <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                    <label for="city" class="control-label">City</label>
+                    <input type="text" name="city" class="form-control" id="city" value="{{ Request::old('city') ?: $address->city }}">
+                    @if($errors->has('city'))
+                        <span class="help-block">{{ $errors->first('city') }}</span>
+                    @endif
+                </div>
+                <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
+                    <label for="postal_code" class="control-label">Postal Code</label>
+                    <input type="text" name="postal_code" class="form-control" id="postal_code" value="{{ Request::old('postal_code') ?: $address->postal_code }}">
+                    @if($errors->has('postal_code'))
+                        <span class="help-block">{{ $errors->first('postal_code') }}</span>
+                    @endif
+                </div>
+                @endforeach
+                 <div class="form-group">
+                    <button type="submit" class="btn btn-default">Update address</button>
+                </div>
+                <input type="hidden" name="_token" value="{{ Session::token() }}">
+             </form>
+
         </div>
         <div id="reviews" class="tab-pane fade">
         <h3>My Reviews</h3>

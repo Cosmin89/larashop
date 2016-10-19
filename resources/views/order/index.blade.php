@@ -4,7 +4,7 @@
      @if(Session::has('error'))
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
-            <div id="charge-message" class="alert alert-success">
+            <div id="charge-message" class="alert alert-danger">
                 {{ Session::get('error') }}
             </div>
         </div>
@@ -12,13 +12,12 @@
     @endif
     {!! Form::open(['route' => ['order.post'], 'data-parsley-validate', 'id' => 'payment-form']) !!}
     @if(count(Auth::user()->addresses) != 0)  
-        <select name="addressId" class="form-control input-sm">
             @foreach(Auth::user()->addresses as $address)
-                @for($num = 1; $num <= count($address); $num++)
-                    <option value="{{ $address->id }}" @if($num == $address->id) selected="selected" @endif>{{ $address->fullAddress() }}</option>
-                @endfor
+             <p>
+                <strong>Address: {{ $address->fullAddress() }}</strong>
+                <input type="hidden" name="addressId" value="{{ $address->id }}">
+            </p>
             @endforeach
-        </select> 
     @else
     <div class="col-md-8">
             <div class="row">
@@ -62,57 +61,17 @@
                 </div>   
             </div>
             @endif      
-            <h3>Payment</h3>
             <hr>
-
-            <div class="form-group" id="cc-group">
-                {!! Form::label(null, 'Credit card number:') !!}
-                {!! Form::text(null, null, [
-                        'class'                         => 'form-control',
-                        'required'                      => 'required',
-                        'data-stripe'                   => 'number',
-                        'data-parsley-type'             => 'number',
-                        'maxlength'                     => '16',
-                        'data-parsley-trigger'          => 'change focusout',
-                        'data-parsley-class-handler'    => '#cc-group'
-                    ]) !!}
-            </div>
-
-            <div class="form-group" id="ccv-group">
-                {!! Form::label(null, 'Card Validation Code (3 or 4 digit number):') !!}
-                {!! Form::text(null, null, [
-                        'class'                         => 'form-control',
-                        'required'                      => 'required',
-                        'data-stripe'                   => 'cvc',
-                        'data-parsley-type'             => 'number',
-                        'data-parsley-trigger'          => 'change focusout',
-                        'maxlength'                     => '4',
-                        'data-parsley-class-handler'    => '#ccv-group'
-                    ]) !!}
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                     <div class="form-group" id="exp-m-group">
-                        {!! Form::label(null, 'Ex. Month') !!}
-                        {!! Form::selectMonth(null, null, [
-                            'class'                 => 'form-control',
-                            'required'              => 'required',
-                            'data-stripe'           => 'exp-month'
-                        ], '%m') !!}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                     <div class="form-group" id="exp-y-group">
-                        {!! Form::label(null, 'Ex. Year') !!}
-                        {!! Form::selectYear(null, date('Y'), date('Y') + 10, null, [
-                                'class'             => 'form-control',
-                                'required'          => 'required',
-                                'data-stripe'       => 'exp-year'
-                            ]) !!}
-                    </div>
-                </div>
-            </div>
+            <h3>Payment</h3>
+            @if(Auth::user()->cardType && Auth::user()->last4)
+                    <p>
+                        <strong>{{ Auth::user()->cardType }}</strong> | 
+                        <strong>{{ Auth::user()->last4 }}</strong>
+                    </p>
+            @else
+                <div id="dropin-container"></div>
+            @endif
+            
             </div>
             <div class="col-md-4">
                 <div class="well">
@@ -145,40 +104,51 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
      <script>
-        Stripe.setPublishableKey('{!! env('STRIPE_PK') !!}');
+        // Stripe.setPublishableKey('{!! env('STRIPE_PK') !!}');
 
-        jQuery(function($) {
-            $('#payment-form').submit(function(event) {
-                var $form = $(this);
+        // jQuery(function($) {
+        //     $('#payment-form').submit(function(event) {
+        //         var $form = $(this);
 
-                $form.parsley().subscribe('parsley:form:validate', function(formInstance) {
-                    formInstance.submitEvent.preventDefault();
-                    return false;
-                });
+        //         $form.parsley().subscribe('parsley:form:validate', function(formInstance) {
+        //             formInstance.submitEvent.preventDefault();
+        //             return false;
+        //         });
 
-                $form.find('#submitBtn').prop('disabled', true);
+        //         $form.find('#submitBtn').prop('disabled', true);
 
-                Stripe.card.createToken($form, stripeResponseHandler);
+        //         Stripe.card.createToken($form, stripeResponseHandler);
 
-                return false;
-            });
-        });
+        //         return false;
+        //     });
+        // });
 
-        function stripeResponseHandler(status, response) {
-            var $form = $('#payment-form');
+        // function stripeResponseHandler(status, response) {
+        //     var $form = $('#payment-form');
 
-            if(response.error) {
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('.payment-errors').addClass('alert alert-danger');
-                $form.find('#submitBtn').prop('disabled', false);
-                $('#submitBtn').button('reset');
-            } else {
-                var token = response.id;
+        //     if(response.error) {
+        //         $form.find('.payment-errors').text(response.error.message);
+        //         $form.find('.payment-errors').addClass('alert alert-danger');
+        //         $form.find('#submitBtn').prop('disabled', false);
+        //         $('#submitBtn').button('reset');
+        //     } else {
+        //         var token = response.id;
 
-                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        //         $form.append($('<input type="hidden" name="stripeToken" />').val(token));
 
-                $form.get(0).submit();
-            }
-        };
+        //         $form.get(0).submit();
+        //     }
+        // };
     </script>
+    <script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
+
+        <script>
+            $.ajax({
+                url: '{{ route('braintree.token') }}'
+            }).done(function(response) {
+                braintree.setup(response.data.token, 'dropin', {
+                    container: 'dropin-container',
+                });
+            });
+        </script>
 @endsection
