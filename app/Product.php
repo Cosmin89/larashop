@@ -11,6 +11,8 @@ class Product extends Model
 
     protected $fillable = ['title', 'slug', 'description', 'price', 'image', 'stock'];
     
+    protected $primaryKey = 'id';
+    
     public $quantity = null;
 
     public function hasLowStock()
@@ -49,7 +51,7 @@ class Product extends Model
 
     public function searchableAs()
     {
-        return 'product_index';
+        return 'products_index';
     }
 
     public function getRouteKeyName()

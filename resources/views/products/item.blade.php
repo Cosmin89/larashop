@@ -52,8 +52,8 @@
                 <ul class="media-list">
                     <li class="media">
                         <div class="media-left">
-                            @foreach($review->user->socials as $social)
-                            <img class="media-object img-circle" src="{{ $social->avatar }}" alt="...">
+                            @foreach($review->user->social as $social)
+                                <img class="media-object img-circle" src="@if($social->avatar) {{ $social->avatar }} @else {{ $review->user->getAvatarUrl() }} @endif" alt="...">
                             @endforeach
                         </div>
                        

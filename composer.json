@@ -13,9 +13,9 @@
         "stripe/stripe-php": "^3.21",
         "guzzlehttp/guzzle": "^6.2",
         "google/recaptcha": "^1.1",
-        "laravel/scout": "^1.1",
-        "algolia/algoliasearch-client-php": "^1.10",
-        "laravel/cashier-braintree": "^2.0"
+        "laravel/cashier-braintree": "^2.0",
+        "teamtnt/laravel-scout-tntsearch-driver": "^1.1",
+        "laravel/scout": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -172,6 +172,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
+        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
         /*
          * Application Service Providers...
          */

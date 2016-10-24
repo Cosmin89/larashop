@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'algolia'),
+    'driver' => env('SCOUT_DRIVER', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,6 +78,10 @@ return [
                 env('ELASTICSEARCH_HOST')
             ],
         ],
+    ],
+
+    'tntsearch' =>  [
+        'storage'   =>  storage_path(),
     ],
 
 ];
