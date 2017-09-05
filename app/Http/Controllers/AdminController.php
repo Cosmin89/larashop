@@ -33,25 +33,31 @@ class AdminController extends Controller
         return view('admin.create');
     }
 
-    public function postCreate(Request $request)
+    public function createProduct(Request $request)
     {
         $this->validate($request, [
             'title' =>  'required|min:4',
-            'slug'  =>  'required',
             'description'   =>  'required',
             'price' =>  'required',
             'image' =>  'required',
             'stock' =>  'required'
         ]);
 
-        $input = $request->all();
+        $product = new Product([
+            'title' => title_case($request->title),
+            'slug' => str_slug($request->title, '-'),
+            'description' => $request->description,
+            'price' => $request->price,
+            'image' =>  $request->image,
+            'stock' => $request->stock
+        ]);
 
-        if(Product::where('title', $request->input('title'))->first())
+        if(Product::where('title', $request->title)->first())
         {
             return redirect()->route('admin.create')->with('error', 'Product title already exists');
         }
 
-        $product = Product::create($input);
+        $product->save();
 
         return response()->json($product);
     }
@@ -63,20 +69,26 @@ class AdminController extends Controller
         return response()->json($product);
     }
 
-    public function updateProduct($product_id, Request $request)
+    public function updateProduct(Request $request, $product_id)
     {
         $product = Product::find($product_id);
-
+        
         $this->validate($request, [
             'title' =>  'required|min:4',
-            'slug'  =>  'required',
             'description'   =>  'required',
             'price' =>  'required',
             'image' =>  'required',
             'stock' =>  'required'
         ]);
 
-        $product->update($request->all());
+        $product->title = title_case($request->title);
+        $product->slug = str_slug($request->title, '-');
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->image = $request->image;
+        $product->stock = $request->stock;
+
+        $product->save();
 
         return response()->json($product);
     }

@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin'], function() {
             ]);
 
             Route::post('/product', [
-                'uses'  =>  'AdminController@postCreate',
+                'uses'  =>  'AdminController@createProduct',
             ]);
 
             Route::get('/product/{product_id}', [

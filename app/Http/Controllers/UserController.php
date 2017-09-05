@@ -11,7 +11,6 @@ use larashop\Role;
 use larashop\Social;
 use larashop\Order;
 use larashop\Address;
-use ReCaptcha\ReCaptcha;
 
 use Illuminate\Http\Request;
 use larashop\Http\Requests;
@@ -30,14 +29,9 @@ class UserController extends Controller
         $this->validate($request, [
             'name'  =>  'required|min:4',
             'email' => 'email|required|unique:users',
-            'password' => 'required|min:4',
-            'g-recaptcha-response' => 'required'
+            'password' => 'required|min:4'
         ]);
 
-        if($this->captchaCheck($request) == false)
-        {
-            return redirect()->back();
-        }
 
         $user = new User([
             'name'  => $request->input('name'),
@@ -123,18 +117,18 @@ class UserController extends Controller
      * @return Response
      */
 
-    private function captchaCheck(Request $request)
-    {
-        $response = $request->input('g-recaptcha-response');
-        $remoteip = $_SERVER['REMOTE_ADDR'];
-        $secret   = env('RE_CAP_SECRET');
+    // private function captchaCheck(Request $request)
+    // {
+    //     $response = $request->input('g-recaptcha-response');
+    //     $remoteip = $_SERVER['REMOTE_ADDR'];
+    //     $secret   = env('RE_CAP_SECRET');
 
-        $recaptcha = new ReCaptcha($secret);
-        $resp = $recaptcha->verify($response, $remoteip);
-        if($resp->isSuccess()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     $recaptcha = new ReCaptcha($secret);
+    //     $resp = $recaptcha->verify($response, $remoteip);
+    //     if($resp->isSuccess()) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }

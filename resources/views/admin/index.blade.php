@@ -9,7 +9,6 @@
                         <tr>
                             <th>Name</th>
                             <th>E-mail</th>
-                            <th>Stripe Customer ID</th>
                             <th>User</th>
                             <th>Admin</th>
                         </tr>
@@ -22,7 +21,6 @@
                                    {{ $user->name }}
                                 </td>
                                 <td>{{ $user->email }} <input type="hidden" name="email" value="{{ $user->email }}"></td>
-                                <td>{{ $user->stripe_customer_id }}</td>
                                 <td><input type="checkbox"{{ $user->hasRole('user') ? 'checked' : '' }} name="role_user"></td>
                                 <td><input type="checkbox"{{ $user->hasRole('administrator') ? 'checked' : '' }} name="role_admin"></td>
                                 <td><button type="submit" class="btn btn-primary btn-sm">Assign Roles</button></td>
@@ -33,5 +31,4 @@
                 </table>
             </div>
     </div>
-    
 @endsection

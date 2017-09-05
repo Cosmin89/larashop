@@ -13,10 +13,6 @@
                 <input type="text" id="title" name="title" class="form-control" value="">          
             </div>
             <div class="form-group">
-                <label for="slug">Slug</label>
-                <input type="text" id="slug" name="slug" class="form-control" value=""> 
-            </div>
-            <div class="form-group">
                 <label for="description">Description</label>
                 <input type="textarea" id="description" name="description" class="form-control" value="">
             </div>

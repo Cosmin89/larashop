@@ -110,7 +110,6 @@
 
             var formData = {
                 title: $('#title').val(),
-                slug: $('#slug').val(),
                 description: $('#description').val(),
                 price: $('#price').val(),
                 image: $('#image').val(),
