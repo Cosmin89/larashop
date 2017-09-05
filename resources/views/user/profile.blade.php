@@ -85,8 +85,8 @@
                     <h4><a href="{{ route('product.get', ['slug' => $review->product->slug]) }}">{{ $review->title }}</a> </h4> Date {{ $review->created_at }} 
                     <article>
                             {{ $review->content }} 
-                    </article> 
-
+                    </article>
+                    <p> Likes: {{ $review->likes->count() }}</p>
             @endforeach
             <hr>
         </div>
